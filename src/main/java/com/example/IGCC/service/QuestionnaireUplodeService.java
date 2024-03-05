@@ -9,10 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -112,7 +109,6 @@ public class QuestionnaireUplodeService {
         QuestionnaireComponent component;
         int count=0;
         int sectionId=1;
-        int questionId=1;
         for (List<String> row : csvData) {
             String row_1= row.get(0);
             String row_2= row.get(1);
@@ -129,10 +125,9 @@ public class QuestionnaireUplodeService {
                 questionnaire=new Questionnaire();
                 questionnaire.setId(String.valueOf(sectionId++));
                 questionnaire.setSection(row.get(2));
-                questionId=1;
             } else if(row_1=="" && row_2!="") {
                 component=new QuestionnaireComponent();
-                component.setQuestionId(String.valueOf(questionId++));
+                component.setQuestionId(String.valueOf(UUID.randomUUID().toString()));
                 component.setQuestion(row.get(2));
                 component.setScore(row.get(3));
                 component.setReport(row.get(5));

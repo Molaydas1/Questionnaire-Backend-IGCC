@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
@@ -14,9 +15,11 @@ import java.util.List;
 @ToString
 @Document("User")
 public class User {
+    @Id
+    private String id;
     private String email;
     private String country;
     private String sector;
-    private boolean responseKey;
+    private Boolean responseKey;
     private List<UserAnswerResponse> userAnswerResponse;
 }

@@ -20,8 +20,8 @@ public class QuestionnaireComponent {
     private String questionType;
     private Boolean required;
     private Map<String, String> parameters;
-    @Field("email")
-    private String email;
+//    @Field("email")
+//    private String email;
     @Field("response")
     private Boolean response;
 }
