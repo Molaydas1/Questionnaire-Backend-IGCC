@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>test</title>
+</head>
+<body>
+<h1>Questions and Options</h1>
+<!--<ul>-->
+<!--    <li th:each="question : ${questions}">-->
+<!--        <b th:text="${question[0]}"></b>-->
+<!--        <ul>-->
+<!--            <li th:each="option : ${question.subList(1, question.size())}" th:text="${option}"></li>-->
+<!--        </ul>-->
+<!--    </li>-->
+<!--</ul>-->
+<dl th:each="question : ${questions}">
+    <dt th:text="${question[0]}"></dt>
+    <dd>
+        <ul>
+            <li th:each="option : ${question.subList(1, question.size())}" th:text="${option}"></li>
+        </ul>
+    </dd>
+</dl>
+</body>
+</html>

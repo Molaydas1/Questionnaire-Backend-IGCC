@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>SCAN-R_Country and Sectoral Risks</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>country</th>
+        <th>typeOfRisk</th>
+        <th>description</th>
+        <th>levelOfRisk</th>
+        <th>source</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${output}">
+        <td th:text="${item.id}"></td>
+        <td th:text="${item.country}"></td>
+        <td th:text="${item.typeOfRisk}"></td>
+        <td th:text="${item.description}"></td>
+        <td th:text="${item.levelOfRisk}"></td>
+        <td th:text="${item.source}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
