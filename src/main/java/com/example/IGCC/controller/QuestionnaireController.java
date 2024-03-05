@@ -1,5 +1,6 @@
 package com.example.IGCC.controller;
 
+import com.example.IGCC.exception.MyFileNotFoundException;
 import com.example.IGCC.exception.NoRecordsFoundExcption;
 import com.example.IGCC.model.QuestionnaireComponent;
 import com.example.IGCC.model.Questionnaire;
@@ -30,14 +31,14 @@ public class QuestionnaireController {
     private QuestionnaireRepository questionnaireRepository;
     @Autowired
     private QuestionnaireUplodeService questionnaireUplodeService;
-//    @PostMapping("/upload")
+    //    @PostMapping("/upload")
 //    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
 //        if ((!file.getOriginalFilename().endsWith(".xlsx"))) {
 //            log.info("Please select a file to upload.");
 //            throw new MyFileNotFoundException("Please select a .xlsx file to upload.");
 //        }
 //        try {
-//            questionnaireService.uploadData(file);
+//            questionnaireUplodeService.parseCsvData(file);
 //            log.info("uploading file {}", file.getOriginalFilename());
 //            return ResponseEntity.ok("Excel data imported successfully.");
 //        } catch (IOException e) {
@@ -45,6 +46,21 @@ public class QuestionnaireController {
 //            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to import Excel data.");
 //        }
 //    }
+    @PostMapping("/upload")
+    public ResponseEntity<String> convertExcelToCsvAndSave(@RequestParam("file") MultipartFile file) {
+        if ((!file.getOriginalFilename().endsWith(".xlsx"))) {
+            log.info("Please select a file to upload.");
+            throw new MyFileNotFoundException("Please select a .xlsx file to upload.");
+        }
+        try {
+            questionnaireRepository.saveAll(questionnaireUplodeService.parseCsvData(file));
+            log.info("uploading file {}", file.getOriginalFilename());
+            return ResponseEntity.ok("Excel data imported successfully.");
+        } catch (IOException e) {
+            log.info("Execption occurs {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to import Excel data.");
+        }
+    }
     @GetMapping("/getAllQuestionnaire")
     public ResponseEntity<List<Questionnaire>> getAllQuestionnaire() {
         List<Questionnaire> questionnaires = questionnaireRepository.findAllQuestionnaire();
@@ -70,16 +86,6 @@ public class QuestionnaireController {
         }catch(Exception e){
             log.info("Execption occurs {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
-    }
-    @PostMapping("/convertAndSave")
-    public ResponseEntity<String> convertExcelToCsvAndSave(@RequestParam("file") MultipartFile file) {
-        try {
-            questionnaireRepository.saveAll(questionnaireUplodeService.parseCsvData(file));
-            return ResponseEntity.ok("Data saved successfully!");
-        } catch (IOException e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while converting Excel to CSV and saving data into MongoDB");
         }
     }
 
