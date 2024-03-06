@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ea027472-d260-40a0-ac16-bd01dbc66984" name="Changes" comment="create for CountryOrSectorRisks and Questionnaire service" />
+    <list default="true" id="ea027472-d260-40a0-ac16-bd01dbc66984" name="Changes" comment="create for CountryOrSectorRisks and Questionnaire service">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/controller/QuestionnaireController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/controller/QuestionnaireController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/service/CountryOrSectorRisksService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/service/CountryOrSectorRisksService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/service/QuestionnaireUplodeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/service/QuestionnaireUplodeService.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -30,7 +37,7 @@
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
         <option name="accountId" value="0b27029e-20ad-488d-9cbb-b9db6293be6e" />
-        <option name="url" value="https://github.com/Molaydas1/QuestionnaireBackend-IGCC-.git" />
+        <option name="url" value="https://github.com/Molaydas1/Questionnaire-Backend-IGCC.git" />
       </UrlAndAccount>
     </option>
   </component>
@@ -59,6 +66,9 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/Questionnaire-Backend-IGCC",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
     "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices"
   }
 }]]></component>

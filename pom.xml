@@ -79,6 +79,11 @@
 			<artifactId>flying-saucer</artifactId>
 			<version>9.1.24</version>
 		</dependency>
+		<dependency>
+			<groupId>com.opencsv</groupId>
+			<artifactId>opencsv</artifactId>
+			<version>5.5.1</version> <!-- Use the latest version -->
+		</dependency>
 
 
 	</dependencies>

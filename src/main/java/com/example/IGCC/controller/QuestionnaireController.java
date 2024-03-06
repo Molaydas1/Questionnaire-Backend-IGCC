@@ -48,17 +48,20 @@ public class QuestionnaireController {
 //    }
     @PostMapping("/upload")
     public ResponseEntity<String> convertExcelToCsvAndSave(@RequestParam("file") MultipartFile file) {
-        if ((!file.getOriginalFilename().endsWith(".xlsx"))) {
-            log.info("Please select a file to upload.");
-            throw new MyFileNotFoundException("Please select a .xlsx file to upload.");
-        }
+//        if ((!file.getOriginalFilename().endsWith(".xlsx"))) {
+//            log.info("Please select a file to upload.");
+//            throw new MyFileNotFoundException("Please select a .xlsx file to upload.");
+//        }
         try {
-            questionnaireRepository.saveAll(questionnaireUplodeService.parseCsvData(file));
+//            questionnaireRepository.saveAll(questionnaireUplodeService.parseCsvData(file));
+            questionnaireRepository.saveAll(questionnaireUplodeService.saveDataFromCsv(file));
             log.info("uploading file {}", file.getOriginalFilename());
             return ResponseEntity.ok("Excel data imported successfully.");
         } catch (IOException e) {
             log.info("Execption occurs {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to import Excel data.");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
     @GetMapping("/getAllQuestionnaire")
