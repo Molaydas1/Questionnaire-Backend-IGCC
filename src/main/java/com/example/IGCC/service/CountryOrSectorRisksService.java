@@ -1,7 +1,9 @@
 package com.example.IGCC.service;
 
+import com.example.IGCC.exception.NoRecordsFoundExcption;
 import com.example.IGCC.model.CountryOrSectorRisks;
 import com.example.IGCC.repository.CountryOrSectorRisksRepository;
+import com.lowagie.text.DocumentException;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,7 +65,10 @@ public class CountryOrSectorRisksService {
         }
         return null;
     }
-    public byte[] generatePdf(List<CountryOrSectorRisks> countryOrSectorRisks) throws Exception {
+    public byte[] generatePdf(String country) throws NoRecordsFoundExcption, DocumentException {
+
+        List<CountryOrSectorRisks> countryOrSectorRisks = countryOrSectorRisksRepository.findAllByCountry(country);
+        if(countryOrSectorRisks.isEmpty())throw new NoRecordsFoundExcption("no records found");
 
         Context context = new Context();
         context.setVariable("output", countryOrSectorRisks);

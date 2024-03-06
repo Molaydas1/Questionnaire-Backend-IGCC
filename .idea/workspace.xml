@@ -6,11 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="ea027472-d260-40a0-ac16-bd01dbc66984" name="Changes" comment="create for CountryOrSectorRisks and Questionnaire service">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/controller/CountryOrSectorRisksController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/controller/CountryOrSectorRisksController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/controller/QuestionnaireController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/controller/QuestionnaireController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/controller/UserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/service/CountryOrSectorRisksService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/service/CountryOrSectorRisksService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/service/QuestionnaireService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/service/QuestionnaireService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/service/QuestionnaireUplodeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/service/QuestionnaireUplodeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

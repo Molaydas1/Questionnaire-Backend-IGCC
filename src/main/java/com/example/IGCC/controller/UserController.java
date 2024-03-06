@@ -36,15 +36,8 @@ public class UserController {
     @PostMapping("/create")
     public ResponseEntity<String> createUser(@RequestBody User user) {
         try {
-            user.setId(UUID.randomUUID().toString());
-            user.setResponseKey(false);
-            user.setUserAnswerResponse(new ArrayList<>());
-            userRepository.save(user);
+            String completeUrl =userService.createUserService(user);
             log.info("create user {}", user);
-
-            String completeUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
-                    .path("/User/getAllQuestionnaire")
-                    .toUriString();
 
             return ResponseEntity.ok("The complete URL is: " + completeUrl);
 //            return ResponseEntity.ok("create user successfully.");

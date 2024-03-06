@@ -2,10 +2,12 @@ package com.example.IGCC.service;
 
 import com.example.IGCC.model.Questionnaire;
 import com.example.IGCC.model.QuestionnaireComponent;
+import com.example.IGCC.repository.QuestionnaireRepository;
 import com.opencsv.CSVReader;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,6 +20,8 @@ import java.util.stream.StreamSupport;
 
 @Service
 public class QuestionnaireUplodeService {
+    @Autowired
+    private QuestionnaireRepository questionnaireRepository;
 
     //    public void uploadData(MultipartFile file) throws IOException {
 //        List<List<String>> rows = new ArrayList<>();
@@ -145,7 +149,7 @@ public class QuestionnaireUplodeService {
         }
         return questionnaires;
     }
-    public List<Questionnaire> saveDataFromCsv(MultipartFile file) throws Exception {
+    public void saveDataFromCsv(MultipartFile file) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(file.getInputStream()));
         CSVReader csvReader = new CSVReader(br);
 
@@ -191,7 +195,7 @@ public class QuestionnaireUplodeService {
         for (Questionnaire i:questionnaires){
             System.out.println(i.toString());
         }
-        return questionnaires;
+        questionnaireRepository.saveAll(questionnaires);
     }
 
 }

@@ -44,10 +44,8 @@ public class CountryOrSectorRisksController {
     }
     @GetMapping("/generatePdf")
     public ResponseEntity<byte[]> generatePdf(@RequestParam("country") String country){
-        List<CountryOrSectorRisks> countryOrSectorRisks = countryOrSectorRisksRepository.findAllByCountry(country);
-        if(countryOrSectorRisks.isEmpty())throw new NoRecordsFoundExcption("no records found");
         try {
-            byte[] pdfBytes = countryOrSectorRisksService.generatePdf(countryOrSectorRisks);
+            byte[] pdfBytes = countryOrSectorRisksService.generatePdf(country);
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_PDF);

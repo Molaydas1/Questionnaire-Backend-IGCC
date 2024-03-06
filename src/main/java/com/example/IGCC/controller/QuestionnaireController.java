@@ -54,23 +54,20 @@ public class QuestionnaireController {
 //        }
         try {
 //            questionnaireRepository.saveAll(questionnaireUplodeService.parseCsvData(file));
-            questionnaireRepository.saveAll(questionnaireUplodeService.saveDataFromCsv(file));
+            questionnaireUplodeService.saveDataFromCsv(file);
             log.info("uploading file {}", file.getOriginalFilename());
             return ResponseEntity.ok("Excel data imported successfully.");
         } catch (IOException e) {
             log.info("Execption occurs {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to import Excel data.");
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            log.info("Execption occurs {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to import Excel data.");
         }
     }
     @GetMapping("/getAllQuestionnaire")
     public ResponseEntity<List<Questionnaire>> getAllQuestionnaire() {
-        List<Questionnaire> questionnaires = questionnaireRepository.findAllQuestionnaire();
-        if (questionnaires.isEmpty()) {
-            log.info("no records found");
-            throw new NoRecordsFoundExcption("no records found");
-        }
+        List<Questionnaire> questionnaires=questionnaireService.findAllQuestionnaireService();
         log.info("get all question");
         return ResponseEntity.ok().body(questionnaires);
     }
