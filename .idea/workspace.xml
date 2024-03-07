@@ -9,10 +9,20 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/controller/CountryOrSectorRisksController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/controller/CountryOrSectorRisksController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/controller/QuestionnaireController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/controller/QuestionnaireController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/model/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/service/CountryOrSectorRisksService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/service/CountryOrSectorRisksService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/service/QuestionnaireService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/service/QuestionnaireService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/service/QuestionnaireUplodeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/service/QuestionnaireUplodeService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/IGCC/controller/CountryOrSectorRisksController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/IGCC/controller/CountryOrSectorRisksController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/IGCC/controller/QuestionnaireController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/IGCC/controller/QuestionnaireController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/IGCC/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/IGCC/controller/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/IGCC/service/CountryOrSectorRisksService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/IGCC/service/CountryOrSectorRisksService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/IGCC/service/QuestionnaireService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/IGCC/service/QuestionnaireService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/IGCC/service/QuestionnaireUplodeService$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/IGCC/service/QuestionnaireUplodeService$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/IGCC/service/QuestionnaireUplodeService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/IGCC/service/QuestionnaireUplodeService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/IGCC/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/IGCC/service/UserService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +77,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Questionnaire-Backend-IGCC",
+    "last_opened_file_path": "D:/my_project/QR",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",

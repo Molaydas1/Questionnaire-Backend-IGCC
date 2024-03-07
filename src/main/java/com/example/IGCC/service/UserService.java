@@ -22,37 +22,34 @@ public class UserService {
     private QuestionnaireRepository questionnaireRepository;
     @Autowired
     private UserRepository userRepository;
-    public String createUserService(User user){
-        user.setId(UUID.randomUUID().toString());
-        user.setResponseKey(false);
-        user.setUserAnswerResponse(new ArrayList<>());
-        userRepository.save(user);
-
-        return ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/User/getAllQuestionnaire")
-                .toUriString();
-    }
-    public List<Questionnaire> userAndQuestionnaire(String email){
+    public List<Questionnaire> createUserService(User user){
+        User newUser=userRepository.findByEmail(user.getEmail());
         List<Questionnaire> questionnaires = questionnaireRepository.findAllQuestionnaire();
-        User user=userRepository.findByEmail(email);
-        if(user.getResponseKey()==false){
-            return questionnaires;
-        }else{
+        if(newUser!=null){
+            log.info("already user exists{}", user);
+            user=newUser;
+            System.out.println(user);
             for(Questionnaire questionnaire:questionnaires){
                 for(QuestionnaireComponent component:questionnaire.getComponents()){
                     for (UserAnswerResponse userAnswerResponse:user.getUserAnswerResponse()){
                         if(userAnswerResponse.getQuestionId().equals(component.getQuestionId())){
                             component.setResponse(userAnswerResponse.getResponse());
+                            System.out.println(component.getQuestionId());
                         }
                     }
                 }
             }
             return questionnaires;
         }
+        log.info("create user {}", user);
+        user.setResponseKey(false);
+        user.setUserAnswerResponse(new ArrayList<>());
+        userRepository.save(user);
+        return questionnaires;
     }
 
-    public User userAndQuestionnaireSave(List<Questionnaire> questionnaires,String email){
-        User user=userRepository.findByEmail(email);
+    public User userAndQuestionnaireSave(List<Questionnaire> questionnaires){
+        User user=userRepository.findByEmail("sbdsbc1");
         List<UserAnswerResponse> userAnswerResponses=new ArrayList<>();
         if(user.getResponseKey()==false){
             user.setResponseKey(true);

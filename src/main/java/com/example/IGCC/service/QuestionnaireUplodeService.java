@@ -1,9 +1,12 @@
 package com.example.IGCC.service;
 
+import com.example.IGCC.exception.MyFileNotFoundException;
 import com.example.IGCC.model.Questionnaire;
 import com.example.IGCC.model.QuestionnaireComponent;
 import com.example.IGCC.repository.QuestionnaireRepository;
 import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvException;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -19,6 +22,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
+@Slf4j
 public class QuestionnaireUplodeService {
     @Autowired
     private QuestionnaireRepository questionnaireRepository;
@@ -87,69 +91,73 @@ public class QuestionnaireUplodeService {
 //        }
 //        return null;
 //    }
-    private List<List<String>> convertExcelToCsv(MultipartFile file) throws IOException {
-        try (Workbook workbook = new XSSFWorkbook(file.getInputStream())) {
-            Sheet sheet = workbook.getSheetAt(0);
-            return StreamSupport.stream(sheet.spliterator(), false)
-                    .map(row -> StreamSupport.stream(row.spliterator(), false)
-                            .map(cell -> {
-                                switch (cell.getCellType()) {
-                                    case STRING:
-                                        return cell.getStringCellValue();
-                                    case NUMERIC:
-                                        return String.valueOf(cell.getNumericCellValue());
-                                    case BOOLEAN:
-                                        return String.valueOf(cell.getBooleanCellValue());
-                                    default:
-                                        return "";
-                                }
-                            })
-                            .collect(Collectors.toList()))
-                    .collect(Collectors.toList());
+//    private List<List<String>> convertExcelToCsv(MultipartFile file) throws IOException {
+//        try (Workbook workbook = new XSSFWorkbook(file.getInputStream())) {
+//            Sheet sheet = workbook.getSheetAt(0);
+//            return StreamSupport.stream(sheet.spliterator(), false)
+//                    .map(row -> StreamSupport.stream(row.spliterator(), false)
+//                            .map(cell -> {
+//                                switch (cell.getCellType()) {
+//                                    case STRING:
+//                                        return cell.getStringCellValue();
+//                                    case NUMERIC:
+//                                        return String.valueOf(cell.getNumericCellValue());
+//                                    case BOOLEAN:
+//                                        return String.valueOf(cell.getBooleanCellValue());
+//                                    default:
+//                                        return "";
+//                                }
+//                            })
+//                            .collect(Collectors.toList()))
+//                    .collect(Collectors.toList());
+//        }
+//    }
+//    public List<Questionnaire> parseCsvData(MultipartFile file) throws IOException {
+//        List<List<String>> csvData=convertExcelToCsv(file);
+//        List<Questionnaire> questionnaires=new ArrayList<>();
+//        List<QuestionnaireComponent> components=new ArrayList<>();
+//        Questionnaire questionnaire=null;
+//        QuestionnaireComponent component;
+//        int count=0;
+//        int sectionId=1;
+//        for (List<String> row : csvData) {
+//            String row_1= row.get(0);
+//            String row_2= row.get(1);
+//            if(row_1=="" && row_2==""){
+//                count++;
+//                if(count==2){
+//                    break;
+//                }
+//                questionnaire.setComponents(components);
+//                questionnaires.add(questionnaire);
+//                components=new ArrayList<>();
+//            } else if(row_1!="" && row_2!="") {
+//                count=0;
+//                questionnaire=new Questionnaire();
+//                questionnaire.setId(String.valueOf(sectionId++));
+//                questionnaire.setSection(row.get(2));
+//            } else if(row_1=="" && row_2!="") {
+//                component=new QuestionnaireComponent();
+//                component.setQuestionId(String.valueOf(UUID.randomUUID().toString()));
+//                component.setQuestion(row.get(2));
+//                component.setScore(row.get(3));
+//                component.setReport(row.get(5));
+//                component.setQuestionType("Radio");
+//                component.setRequired(true);
+//                Map<String, String> map = new HashMap<>();
+//                map.put("no",row.get(6));
+//                map.put("yes",row.get(7));
+//                component.setParameters(map);
+//                components.add(component);
+//            }
+//        }
+//        return questionnaires;
+//    }
+    public void saveDataFromCsv(MultipartFile file) throws IOException, CsvException {
+        if ((!file.getOriginalFilename().endsWith(".csv"))) {
+            log.info("Please select a file to upload.");
+            throw new MyFileNotFoundException("Please select a .xlsx file to upload.");
         }
-    }
-    public List<Questionnaire> parseCsvData(MultipartFile file) throws IOException {
-        List<List<String>> csvData=convertExcelToCsv(file);
-        List<Questionnaire> questionnaires=new ArrayList<>();
-        List<QuestionnaireComponent> components=new ArrayList<>();
-        Questionnaire questionnaire=null;
-        QuestionnaireComponent component;
-        int count=0;
-        int sectionId=1;
-        for (List<String> row : csvData) {
-            String row_1= row.get(0);
-            String row_2= row.get(1);
-            if(row_1=="" && row_2==""){
-                count++;
-                if(count==2){
-                    break;
-                }
-                questionnaire.setComponents(components);
-                questionnaires.add(questionnaire);
-                components=new ArrayList<>();
-            } else if(row_1!="" && row_2!="") {
-                count=0;
-                questionnaire=new Questionnaire();
-                questionnaire.setId(String.valueOf(sectionId++));
-                questionnaire.setSection(row.get(2));
-            } else if(row_1=="" && row_2!="") {
-                component=new QuestionnaireComponent();
-                component.setQuestionId(String.valueOf(UUID.randomUUID().toString()));
-                component.setQuestion(row.get(2));
-                component.setScore(row.get(3));
-                component.setReport(row.get(5));
-                component.setQuestionType("Radio");
-                component.setRequired(true);
-                Map<String, String> map = new HashMap<>();
-                map.put("no",row.get(6));
-                map.put("yes",row.get(7));
-                component.setParameters(map);
-                components.add(component);
-            }
-        }
-        return questionnaires;
-    }
-    public void saveDataFromCsv(MultipartFile file) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(file.getInputStream()));
         CSVReader csvReader = new CSVReader(br);
 
@@ -167,7 +175,7 @@ public class QuestionnaireUplodeService {
             if (row_1.equals("") && row_2.equals("")) {
                 count++;
                 if (count == 2) {
-                    break;
+                    continue;
                 }
                 questionnaire.setComponents(components);
                 questionnaires.add(questionnaire);
@@ -191,9 +199,6 @@ public class QuestionnaireUplodeService {
                 component.setParameters(map);
                 components.add(component);
             }
-        }
-        for (Questionnaire i:questionnaires){
-            System.out.println(i.toString());
         }
         questionnaireRepository.saveAll(questionnaires);
     }
