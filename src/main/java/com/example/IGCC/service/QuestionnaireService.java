@@ -6,6 +6,10 @@ import com.example.IGCC.model.Questionnaire;
 import com.example.IGCC.repository.QuestionnaireRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -21,20 +25,12 @@ public class QuestionnaireService {
     private QuestionnaireRepository questionnaireRepository;
     @Autowired
     private TemplateEngine templateEngine;
-    public List<Questionnaire> findAllQuestionnaireService(){
-        List<Questionnaire> questionnaires = questionnaireRepository.findAllQuestionnaire();
-        if (questionnaires.isEmpty()) {
-            log.info("no records found");
-            throw new NoRecordsFoundExcption("no records found");
-        }
-        return questionnaires;
-    }
-    public byte[] generatePdf() throws Exception {
+    public ResponseEntity<byte[]> generatePdf() throws Exception {
         List<Questionnaire> noAttributes = questionnaireRepository.findAll();
         List<List<String>> questions = new ArrayList<>();
         for (Questionnaire item : noAttributes) {
             for(QuestionnaireComponent i:item.getComponents()){
-                List<String> parts = Arrays.asList(i.getParameters().get("no").split("❒"));
+                List<String> parts = Arrays.asList(i.getQuestionOpposite().get(0).split("❒"));
                 questions.add(parts);
             }
         }
@@ -49,6 +45,15 @@ public class QuestionnaireService {
         renderer.createPDF(outputStream);
         renderer.finishPDF();
 
-        return outputStream.toByteArray();
+        byte[] pdfBytes=outputStream.toByteArray();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDispositionFormData("filename", "test_table.pdf");
+        headers.setContentLength(pdfBytes.length);
+
+        log.info("Downloading pdf with test ");
+
+        return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
     }
 }

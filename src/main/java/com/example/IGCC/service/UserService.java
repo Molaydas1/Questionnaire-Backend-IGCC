@@ -9,7 +9,6 @@ import com.example.IGCC.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,46 +25,76 @@ public class UserService {
         User newUser=userRepository.findByEmail(user.getEmail());
         List<Questionnaire> questionnaires = questionnaireRepository.findAllQuestionnaire();
         if(newUser!=null){
-            log.info("already user exists{}", user);
+            log.info("already user exists{}", newUser);
             user=newUser;
-            System.out.println(user);
+            boolean count;
             for(Questionnaire questionnaire:questionnaires){
                 for(QuestionnaireComponent component:questionnaire.getComponents()){
+                    count=false;
                     for (UserAnswerResponse userAnswerResponse:user.getUserAnswerResponse()){
                         if(userAnswerResponse.getQuestionId().equals(component.getQuestionId())){
                             component.setResponse(userAnswerResponse.getResponse());
-                            System.out.println(component.getQuestionId());
+                            count=true;
+                        }else if (count==true){
+                            break;
                         }
+                    }if(count==false){
+                        List<Boolean> list=new ArrayList<>();
+                        for(String s:component.getQuestionOpposite()){
+                            list.add(false);
+                        }
+                        component.setResponse(list);
                     }
                 }
             }
             return questionnaires;
         }
+        for(Questionnaire questionnaire:questionnaires){
+            for(QuestionnaireComponent component:questionnaire.getComponents()){
+                List<Boolean> list=new ArrayList<>();
+                for(String s:component.getQuestionOpposite()){
+                    list.add(false);
+                }
+                component.setResponse(list);
+            }
+        }
         log.info("create user {}", user);
-        user.setResponseKey(false);
         user.setUserAnswerResponse(new ArrayList<>());
         userRepository.save(user);
         return questionnaires;
     }
 
     public User userAndQuestionnaireSave(List<Questionnaire> questionnaires){
-        User user=userRepository.findByEmail("sbdsbc1");
+        User user=userRepository.findByEmail("sbdsbc4");
         List<UserAnswerResponse> userAnswerResponses=new ArrayList<>();
-        if(user.getResponseKey()==false){
-            user.setResponseKey(true);
+        if(user.getUserAnswerResponse().isEmpty()){
             for(Questionnaire questionnaire:questionnaires){
                 for(QuestionnaireComponent component:questionnaire.getComponents()){
-                    userAnswerResponses.add(new UserAnswerResponse(component.getQuestionId(),component.getResponse()));
+                    List<Boolean> list=new ArrayList<>();
+                    for(String s:component.getQuestionOpposite()){
+                        list.add(false);
+                    }
+                    userAnswerResponses.add(new UserAnswerResponse(component.getQuestionId(),list));
                 }
             }
         }else{
+            boolean count;
+            int i=0;
+            userAnswerResponses=user.getUserAnswerResponse();
             for(Questionnaire questionnaire:questionnaires){
                 for(QuestionnaireComponent component:questionnaire.getComponents()){
-                    for (UserAnswerResponse userAnswerResponse:user.getUserAnswerResponse()){
+                    count=false;
+                    for(UserAnswerResponse userAnswerResponse:userAnswerResponses){
                         if(userAnswerResponse.getQuestionId().equals(component.getQuestionId())){
-                            userAnswerResponses.add(new UserAnswerResponse(component.getQuestionId(),component.getResponse()));
+                            count=true;
+                            userAnswerResponses.set(i,new UserAnswerResponse(userAnswerResponse.getQuestionId(),component.getResponse()));
+                        }else if (count==true){
+                            break;
                         }
+                    }if(count==false){
+                        userAnswerResponses.add(new UserAnswerResponse(component.getQuestionId(),component.getResponse()));
                     }
+                    i++;
                 }
             }
         }

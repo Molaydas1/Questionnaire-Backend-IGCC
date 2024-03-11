@@ -22,8 +22,6 @@ public class UserController {
     private UserService userService;
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private QuestionnaireRepository questionnaireRepository;
 
     @PostMapping("/create")
     public ResponseEntity<List<Questionnaire>> createUser(@RequestBody User user) {

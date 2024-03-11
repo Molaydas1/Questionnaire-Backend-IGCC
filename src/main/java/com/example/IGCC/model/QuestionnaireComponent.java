@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.util.List;
 import java.util.Map;
 
 @Data
@@ -19,9 +20,9 @@ public class QuestionnaireComponent {
     private String score;
     private String questionType;
     private Boolean required;
-    private Map<String, String> parameters;
+    private List<String> questionOpposite;
 //    @Field("email")
 //    private String email;
     @Field("response")
-    private Boolean response;
+    private List<Boolean> response;
 }

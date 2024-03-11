@@ -5,11 +5,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
 public class UserAnswerResponse {
     private String questionId;
-    private Boolean response;
+    private List<Boolean> response;
 }

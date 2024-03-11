@@ -33,46 +33,6 @@ public class CountryOrSectorRisksService {
     private CountryOrSectorRisksRepository countryOrSectorRisksRepository;
     @Autowired
     private TemplateEngine templateEngine;
-
-    // Load Excel file
-//    public void importDataFromExcel(MultipartFile file) throws IOException {
-//        List<List<String>> rows = new ArrayList<>();
-//
-//        Workbook workbook = WorkbookFactory.create(file.getInputStream());
-//        Sheet sheet = workbook.getSheetAt(0);
-//        rows = StreamSupport.stream(sheet.spliterator(), false)
-//                .map(row -> StreamSupport
-//                        .stream(row.spliterator(), false)
-//                        .map(this::getCellStringValue)
-//                        .collect(Collectors.toList()))
-//                .collect(Collectors.toList());
-//
-//        // Save data to the database
-//
-//        List<CountryOrSectorRisks> excelDataList = rows.stream().skip(2).map(row -> {
-//            CountryOrSectorRisks excelData = new CountryOrSectorRisks();
-//            excelData.setId(row.get(0));
-//            excelData.setCountry(row.get(1));
-//            excelData.setTypeOfRisk(row.get(2));
-//            excelData.setDescription(row.get(3));
-//            excelData.setLevelOfRisk(row.get(4));
-//            excelData.setSource(row.get(5));
-//            return excelData;
-//        }).collect(Collectors.toList());
-//        countryOrSectorRisksRepository.saveAll(excelDataList);
-//    }
-//
-//    private String getCellStringValue(Cell cell) {
-//        CellType cellType = cell.getCellType();
-//        if (cellType == CellType.STRING) {
-//            return cell.getStringCellValue().replace("'","\'");
-//        } else if (cellType == CellType.NUMERIC) {
-//            return String.valueOf((int)cell.getNumericCellValue());
-//        } else if (cellType == CellType.BOOLEAN) {
-//            return String.valueOf(cell.getBooleanCellValue());
-//        }
-//        return null;
-//    }
     public void saveDataFromCsv(MultipartFile file) throws IOException, CsvException {
         if ((!file.getOriginalFilename().endsWith(".csv"))) {
             log.info("Please select a file to upload.");

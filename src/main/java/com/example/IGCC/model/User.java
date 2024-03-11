@@ -19,6 +19,5 @@ public class User {
     private String email;
     private String country;
     private String sector;
-    private Boolean responseKey;
     private List<UserAnswerResponse> userAnswerResponse;
 }

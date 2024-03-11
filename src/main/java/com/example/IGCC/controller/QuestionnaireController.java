@@ -28,24 +28,7 @@ public class QuestionnaireController {
     @Autowired
     private QuestionnaireService questionnaireService;
     @Autowired
-    private QuestionnaireRepository questionnaireRepository;
-    @Autowired
     private QuestionnaireUplodeService questionnaireUplodeService;
-    //    @PostMapping("/upload")
-//    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
-//        if ((!file.getOriginalFilename().endsWith(".xlsx"))) {
-//            log.info("Please select a file to upload.");
-//            throw new MyFileNotFoundException("Please select a .xlsx file to upload.");
-//        }
-//        try {
-//            questionnaireUplodeService.parseCsvData(file);
-//            log.info("uploading file {}", file.getOriginalFilename());
-//            return ResponseEntity.ok("Excel data imported successfully.");
-//        } catch (IOException e) {
-//            log.info("Execption occurs {}", e.getMessage());
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to import Excel data.");
-//        }
-//    }
     @PostMapping("/upload")
     public ResponseEntity<String> convertExcelToCsvAndSave(@RequestParam("file") MultipartFile file) {
         try {
@@ -57,24 +40,11 @@ public class QuestionnaireController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to import Excel data.");
         }
     }
-    @GetMapping("/getAllQuestionnaire")
-    public ResponseEntity<List<Questionnaire>> getAllQuestionnaire() {
-        List<Questionnaire> questionnaires=questionnaireService.findAllQuestionnaireService();
-        log.info("get all question");
-        return ResponseEntity.ok().body(questionnaires);
-    }
     @GetMapping("/generatePdf")
     public ResponseEntity<byte[]> generatePdf(){
         try {
-            byte[] pdfBytes = questionnaireService.generatePdf();
-
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_PDF);
-            headers.setContentDispositionFormData("filename", "test_table.pdf");
-            headers.setContentLength(pdfBytes.length);
-
             log.info("Downloading pdf with test ");
-            return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
+            return questionnaireService.generatePdf();
         }catch(Exception e){
             log.info("Execption occurs {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
