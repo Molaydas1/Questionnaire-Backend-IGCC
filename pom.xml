@@ -84,6 +84,16 @@
 			<artifactId>opencsv</artifactId>
 			<version>5.5.1</version> <!-- Use the latest version -->
 		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-csv</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+		</dependency>
+
+
 
 
 	</dependencies>

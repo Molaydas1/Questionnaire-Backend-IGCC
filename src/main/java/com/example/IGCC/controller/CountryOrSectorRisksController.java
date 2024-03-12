@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class CountryOrSectorRisksController {
     @PostMapping("/upload")
     public ResponseEntity<String> uploadExcelFile(@RequestParam("file") MultipartFile file){
         try {
-            countryOrSectorRisksService.saveDataFromCsv(file);
+            countryOrSectorRisksService.saveDataFromCsv(file.getInputStream());
             log.info("uploading file {}", file.getOriginalFilename());
             return ResponseEntity.ok("Excel data imported successfully.");
         } catch (Exception e) {

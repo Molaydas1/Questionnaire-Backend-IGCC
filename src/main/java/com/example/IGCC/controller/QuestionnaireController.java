@@ -32,7 +32,7 @@ public class QuestionnaireController {
     @PostMapping("/upload")
     public ResponseEntity<String> convertExcelToCsvAndSave(@RequestParam("file") MultipartFile file) {
         try {
-            questionnaireUplodeService.saveDataFromCsv(file);
+            questionnaireUplodeService.importBulk(file.getBytes());
             log.info("uploading file {}", file.getOriginalFilename());
             return ResponseEntity.ok("Excel data imported successfully.");
         }catch (Exception e) {
@@ -50,6 +50,17 @@ public class QuestionnaireController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+//    @GetMapping("/get")
+//    public ResponseEntity<List<Questionnaire>> getQuestionnaireController(@RequestParam("email")String email){
+//        try {
+//            List<Questionnaire> questionnaires=questionnaireService.getQuestionnaireService(email);
+//            log.info("Downloading pdf with test ");
+//            return ResponseEntity.status(HttpStatus.OK).body(questionnaires);
+//        }catch(Exception e){
+//            log.info("Execption occurs {}", e.getMessage());
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+//        }
+//    }
 }
 
 

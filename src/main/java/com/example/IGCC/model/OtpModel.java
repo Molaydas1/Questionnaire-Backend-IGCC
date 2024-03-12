@@ -1,24 +1,19 @@
 package com.example.IGCC.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
-
+import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-@Document("Questionnaire")
-public class Questionnaire {
+@Document(collection = "otp")
+public class OtpModel {
     @Id
-    private String id;
-    private String section;
-    private List<QuestionnaireComponent> components;
+    private String email;
+    private String otp;
+    private Date timestamp;
 }
-
