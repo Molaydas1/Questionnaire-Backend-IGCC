@@ -21,6 +21,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -28,98 +29,105 @@ import java.util.UUID;
 public class QuestionnaireUplodeService {
     @Autowired
     private QuestionnaireRepository questionnaireRepository;
-//    public void saveDataFromCsv(MultipartFile file) throws IOException, CsvException {
-//        if ((!file.getOriginalFilename().endsWith(".csv"))) {
-//            log.info("Please select a file to upload.");
-//            throw new MyFileNotFoundException("Please select a .csv file to upload.");
-//        }
-//        BufferedReader br = new BufferedReader(new InputStreamReader(file.getInputStream()));
-//        CSVReader csvReader = new CSVReader(br);
-//
-//        List<String[]> lines = csvReader.readAll(); // Read all lines from CSV
-//
+//    public void saveDataFromCsv(byte[] csvFile) throws IOException {
+//        CsvMapper csvMapper = new CsvMapper();
+//        CsvSchema schema = CsvSchema.emptySchema().withHeader();
 //        List<Questionnaire> questionnaires = new ArrayList<>();
-//        List<QuestionnaireComponent> components = new ArrayList<>();
-//        Questionnaire questionnaire = null;
-//        QuestionnaireComponent component;
-//        int count = 0;
-//        int sectionId = 1;
-//        for (String[] fields : lines.subList(1, lines.size())) {
-//            String row_1 = fields[0];
-//            String row_2 = fields[1];
-//            if (row_1.equals("") && row_2.equals("")) {
-//                count++;
-//                if (count == 2) {
-//                    continue;
+//        List<QuestionnaireComponent> questionnaireComponents =new ArrayList<>();
+//        Charset charset = Charset.forName("ISO-8859-1");
+//        try (Reader reader = new InputStreamReader(new ByteArrayInputStream(csvFile), charset)) {
+//            MappingIterator<QuestionnaireCSVModel> iterator = csvMapper.readerFor(QuestionnaireCSVModel.class).with(schema).readValues(reader);
+//            boolean count=false;
+//            String QuesctionSection="";
+//            while (iterator.hasNext()) {
+//                QuestionnaireCSVModel csvRow = iterator.next();
+//                QuestionnaireComponent questionnaireComponent=new QuestionnaireComponent();
+//                if(!csvRow.getQuesctionSection().equals("")){
+//                    if(count){
+//                        questionnaires.add(new Questionnaire(UUID.randomUUID().toString(),
+//                                QuesctionSection,questionnaireComponents));
+//                        questionnaireComponents=new ArrayList<>();
+//                    }
+//                    QuesctionSection=csvRow.getQuesctionSection();
+//                    count=true;
+//                }if (count) {
+//                    questionnaireComponent.setQuestionId(csvRow.getQuestionId());
+//                    questionnaireComponent.setQuestion(csvRow.getQuestion());
+//                    questionnaireComponent.setReport(csvRow.getReport());
+//                    questionnaireComponent.setQuestionType(csvRow.getQuestionType());
+//                    questionnaireComponent.setRequired(Boolean.valueOf(csvRow.getReport()));
+//                    questionnaireComponent.setScore(csvRow.getScore());
+//                    questionnaireComponent.setIfNo(csvRow.getIfNo());
+//                    questionnaireComponent.setIfYes(csvRow.getIfYes());
+//                    questionnaireComponents.add(questionnaireComponent);
 //                }
-//                questionnaire.setComponents(components);
-//                questionnaires.add(questionnaire);
-//                components = new ArrayList<>();
-//            } else if ((!row_1.equals("")) && (!row_2.equals(""))) {
-//                count = 0;
-//                questionnaire = new Questionnaire();
-//                questionnaire.setId(String.valueOf(sectionId++));
-//                questionnaire.setSection(fields[2]);
-//            } else if (row_1.equals("") && (!row_2.equals(""))) {
-//                component = new QuestionnaireComponent();
-//                component.setQuestionId(String.valueOf(UUID.randomUUID().toString()));
-//                component.setQuestion(fields[2]);
-//                component.setScore(fields[3]);
-//                component.setQuestionType(fields[4]);
-//                component.setRequired(Boolean.valueOf(fields[5]));
-//                component.setReport(fields[6]);
-//                List<String> list=new ArrayList<>();
-//                for(int i=7;i<fields.length;i++){
-//                    if(fields[i].equals(""))break;
-//                    list.add(fields[i]);
+//                if(!iterator.hasNext()){
+//                    questionnaires.add(new Questionnaire(UUID.randomUUID().toString(),
+//                            QuesctionSection,questionnaireComponents));
 //                }
-//                component.setQuestionOpposite(list);
-//                components.add(component);
 //            }
 //        }
-//        questionnaireRepository.saveAll(questionnaires);
+//        questionnaireRepository.deleteAll();
+//         questionnaireRepository.saveAll(questionnaires);
 //    }
 
-    public void importBulk(byte[] csvFile) throws IOException {
-        CsvMapper csvMapper = new CsvMapper();
-        CsvSchema schema = CsvSchema.emptySchema().withHeader();
-        List<Questionnaire> questionnaires = new ArrayList<>();
-        List<QuestionnaireComponent> questionnaireComponents =new ArrayList<>();
-        Charset charset = Charset.forName("ISO-8859-1");
-        try (Reader reader = new InputStreamReader(new ByteArrayInputStream(csvFile), charset)) {
+    ///////////////////////////////////////////
+
+    public void saveDataFromCsv(byte[] csvFile) throws IOException {
+        try (Reader reader = new InputStreamReader(new ByteArrayInputStream(csvFile), Charset.forName("ISO-8859-1"))) {
+            CsvMapper csvMapper = new CsvMapper();
+            CsvSchema schema = CsvSchema.emptySchema().withHeader();
             MappingIterator<QuestionnaireCSVModel> iterator = csvMapper.readerFor(QuestionnaireCSVModel.class).with(schema).readValues(reader);
-            boolean count=false;
-            String QuesctionSection="";
-            while (iterator.hasNext()) {
-                QuestionnaireCSVModel csvRow = iterator.next();
-                QuestionnaireComponent questionnaireComponent=new QuestionnaireComponent();
-                if(!csvRow.getQuesctionSection().equals("")){
-                    if(count){
-                        questionnaires.add(new Questionnaire(UUID.randomUUID().toString(),
-                                QuesctionSection,questionnaireComponents));
-                        questionnaireComponents=new ArrayList<>();
-                    }
-                    QuesctionSection=csvRow.getQuesctionSection();
-                    count=true;
-                }if (count) {
-                    questionnaireComponent.setQuestionId(csvRow.getQuestionId());
-                    questionnaireComponent.setQuestion(csvRow.getQuestion());
-                    questionnaireComponent.setReport(csvRow.getReport());
-                    questionnaireComponent.setQuestionType(csvRow.getQuestionType());
-                    questionnaireComponent.setRequired(Boolean.valueOf(csvRow.getReport()));
-                    questionnaireComponent.setScore(csvRow.getScore());
-                    questionnaireComponent.setIfNo(csvRow.getIfNo());
-                    questionnaireComponent.setIfYes(csvRow.getIfYes());
-                    questionnaireComponents.add(questionnaireComponent);
+
+            List<Questionnaire> questionnaires = processCsvRows(iterator);
+
+            questionnaireRepository.deleteAll();
+            questionnaireRepository.saveAll(questionnaires);
+        }
+    }
+    private List<Questionnaire> processCsvRows(MappingIterator<QuestionnaireCSVModel> iterator) {
+        List<Questionnaire> questionnaires = new ArrayList<>();
+        List<QuestionnaireComponent> questionnaireComponents = new ArrayList<>();
+        String section = null;
+        String id=null;
+        boolean isNewSection = false;
+
+        while (iterator.hasNext()) {
+            QuestionnaireCSVModel csvRow = iterator.next();
+            if (!csvRow.getQuesctionSection().isEmpty()) {
+                if (isNewSection) {
+                    questionnaires.add(createQuestionnaire(id,section, questionnaireComponents));
+                    questionnaireComponents.clear();
                 }
-                if(!iterator.hasNext()){
-                    questionnaires.add(new Questionnaire(UUID.randomUUID().toString(),
-                            QuesctionSection,questionnaireComponents));
-                }
+                section = csvRow.getQuesctionSection();
+                id = csvRow.getQuestionId().split("\\.")[0];
+                isNewSection = true;
+            }
+            if (isNewSection) {
+                questionnaireComponents.add(createQuestionnaireComponent(csvRow));
             }
         }
-        questionnaireRepository.deleteAll();
-         questionnaireRepository.saveAll(questionnaires);
+        if (section != null) {
+            questionnaires.add(createQuestionnaire(id,section, questionnaireComponents));
+        }
+        return questionnaires;
+    }
+
+    private Questionnaire createQuestionnaire(String id,String section, List<QuestionnaireComponent> components) {
+        return new Questionnaire(id, section, new ArrayList<>(components));
+    }
+
+    private QuestionnaireComponent createQuestionnaireComponent(QuestionnaireCSVModel csvRow) {
+        QuestionnaireComponent component = new QuestionnaireComponent();
+        component.setQuestionId(csvRow.getQuestionId().split("\\.")[1]);
+        component.setQuestion(csvRow.getQuestion());
+        component.setReport(csvRow.getReport());
+        component.setQuestionType(csvRow.getQuestionType());
+        component.setRequired(Boolean.valueOf(csvRow.getReport()));
+        component.setScore(csvRow.getScore());
+        component.setIfNo(csvRow.getIfNo());
+        component.setIfYes(csvRow.getIfYes());
+        return component;
     }
 
 }

@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -31,5 +29,5 @@ public class QuestionnaireComponent {
     @JsonProperty("IfYes")
     protected String ifYes;
     @Field("response")
-    private boolean response;
+    private Boolean response;
 }

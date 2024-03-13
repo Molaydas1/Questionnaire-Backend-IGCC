@@ -13,5 +13,5 @@ import java.util.List;
 @ToString
 public class UserAnswerResponse {
     private String questionId;
-    private boolean response;
+    private Boolean response;
 }

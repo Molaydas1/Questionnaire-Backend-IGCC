@@ -14,7 +14,6 @@ public class GlobalExceptionHandler {
         ErrorResponse errorResponse = new ErrorResponse("An unexpected error occurred", HttpStatus.INTERNAL_SERVER_ERROR);
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
     @ExceptionHandler(MyFileNotFoundException.class)
     public ResponseEntity<Object> handleFileNotFoundException(MyFileNotFoundException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);

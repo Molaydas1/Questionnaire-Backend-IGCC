@@ -1,6 +1,5 @@
 package com.example.IGCC.service;
 
-import com.example.IGCC.exception.MyFileNotFoundException;
 import com.example.IGCC.exception.NoRecordsFoundExcption;
 import com.example.IGCC.model.Questionnaire;
 import com.example.IGCC.model.QuestionnaireComponent;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @Slf4j
@@ -23,7 +21,7 @@ public class UserService {
     private QuestionnaireRepository questionnaireRepository;
     @Autowired
     private UserRepository userRepository;
-    public void createUserService(User user){
+    public void createUser(User user){
         User newUser=userRepository.findByEmail(user.getEmail());
         if(newUser!=null){
             log.info("already user exists{}", newUser);
@@ -33,5 +31,18 @@ public class UserService {
             user.setUserAnswerResponse(new ArrayList<>());
             userRepository.save(user);
         }
+    }
+    public void userAndQuestionnaireSave(List<Questionnaire> questionnaires,String email){
+        User user=userRepository.findByEmail(email);
+        List<UserAnswerResponse> userAnswerResponses=new ArrayList<>();
+        for(Questionnaire questionnaire:questionnaires){
+            for(QuestionnaireComponent component:questionnaire.getComponents()){
+                userAnswerResponses.add(new UserAnswerResponse(questionnaire.getId()+
+                        "."+component.getQuestionId(),
+                        component.getResponse()));
+            }
+        }
+        user.setUserAnswerResponse(userAnswerResponses);
+        userRepository.save(user);
     }
 }

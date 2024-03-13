@@ -61,83 +61,30 @@ public class QuestionnaireService {
 
         return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
     }
-//    public List<Questionnaire> getQuestionnaireService(String email){
-//        User user=userRepository.findByEmail(email);
-//        List<Questionnaire> questionnaires = questionnaireRepository.findAllQuestionnaire();
-//        if(user.getUserAnswerResponse()!=null){
-//            log.info("already user exists{}", user);
-//            boolean count;
-//            for(Questionnaire questionnaire:questionnaires){
-//                for(QuestionnaireComponent component:questionnaire.getComponents()){
-//                    count=false;
-//                    for (UserAnswerResponse userAnswerResponse:user.getUserAnswerResponse()){
-//                        if(userAnswerResponse.getQuestionId().equals(component.getQuestionId())){
-//                            component.setResponse(userAnswerResponse.getResponse());
-//                            count=true;
-//                        }else if (count==true){
-//                            break;
-//                        }
-//                    }if(count==false){
-//                        List<Boolean> list=new ArrayList<>();
-//                        for(Boolean s:component.getResponse()){
-//                            list.add(false);
-//                        }
-//                        component.setResponse(list);
-//                    }
-//                }
-//            }
-//            return questionnaires;
-//        }
-//        for(Questionnaire questionnaire:questionnaires){
-//            for(QuestionnaireComponent component:questionnaire.getComponents()){
-//                List<Boolean> list=new ArrayList<>();
-//                for(boolean s:component.getResponse()){
-//                    list.add(false);
-//                }
-//                component.setResponse(list);
-//            }
-//        }
-//        log.info("create user {}", user);
-//        user.setUserAnswerResponse(new ArrayList<>());
-//        userRepository.save(user);
-//        return questionnaires;
-//    }
-//    public User userAndQuestionnaireSave(List<Questionnaire> questionnaires,String email){
-//        User user=userRepository.findByEmail(email);
-//        if(user==null)throw new NoRecordsFoundExcption("Please select a .csv file to upload.");
-//        List<UserAnswerResponse> userAnswerResponses=new ArrayList<>();
-//        if(user.getUserAnswerResponse().isEmpty()){
-//            for(Questionnaire questionnaire:questionnaires){
-//                for(QuestionnaireComponent component:questionnaire.getComponents()){
-//                    List<Boolean> list=new ArrayList<>();
-//                    for(String s:component.getQuestionOpposite()){
-//                        list.add(false);
-//                    }
-//                    userAnswerResponses.add(new UserAnswerResponse(component.getQuestionId(),list));
-//                }
-//            }
-//        }else{
-//            boolean count;
-//            int i=0;
-//            userAnswerResponses=user.getUserAnswerResponse();
-//            for(Questionnaire questionnaire:questionnaires){
-//                for(QuestionnaireComponent component:questionnaire.getComponents()){
-//                    count=false;
-//                    for(UserAnswerResponse userAnswerResponse:userAnswerResponses){
-//                        if(userAnswerResponse.getQuestionId().equals(component.getQuestionId())){
-//                            count=true;
-//                            userAnswerResponses.set(i,new UserAnswerResponse(userAnswerResponse.getQuestionId(),component.getResponse()));
-//                        }else if (count==true){
-//                            break;
-//                        }
-//                    }if(count==false){
-//                        userAnswerResponses.add(new UserAnswerResponse(component.getQuestionId(),component.getResponse()));
-//                    }
-//                    i++;
-//                }
-//            }
-//        }
-//        user.setUserAnswerResponse(userAnswerResponses);
-//        return user;
-//    }
+    public List<Questionnaire> getQuestionnaire(String email){
+        User user=userRepository.findByEmail(email);
+        List<Questionnaire> questionnaires = questionnaireRepository.findAllQuestionnaire();
+        if(!user.getUserAnswerResponse().isEmpty()){
+            log.info("already user exists{}", user);
+            boolean count;
+            for(Questionnaire questionnaire:questionnaires){
+                for(QuestionnaireComponent component:questionnaire.getComponents()){
+                    count=false;
+                    for (UserAnswerResponse userAnswerResponse:user.getUserAnswerResponse()){
+                        if(userAnswerResponse.getQuestionId().equals(questionnaire.getId()+"."+
+                                component.getQuestionId())){
+
+                            component.setResponse(userAnswerResponse.getResponse());
+                            count=true;
+                            break;
+                        }
+                    }if(count==false){
+                        component.setResponse(null);
+                    }
+                }
+            }
+            return questionnaires;
+        }
+        return questionnaires;
+    }
 }

@@ -28,30 +28,37 @@ public class UserController {
 
     @PostMapping("/create")
     public ResponseEntity<String> createUser(@RequestBody User user) {
-        userService.createUserService(user);
-        return ResponseEntity.ok().body("create user");
+        try {
+            userService.createUser(user);
+            return ResponseEntity.ok().body("create user");
+        }catch (NoRecordsFoundExcption e){
+            return ResponseEntity.ok().body("already user exists ");
+        }
     }
-
-//    @PostMapping("/save")
-//    public ResponseEntity<String> saveAllQuestionnaire(@RequestBody List<Questionnaire> questionnaires,@RequestParam("email") String email) {
-//        User user=userService.userAndQuestionnaireSave(questionnaires,email);
-//
-//        userRepository.save(user);
-//        log.info("save the all Questionnaire for user");
-//        return ResponseEntity.ok("save the all Questionnaire for user");
-//    }
+    @PostMapping("/save")
+    public ResponseEntity<String> allQuestionnaireSaveUser(
+            @RequestBody List<Questionnaire> questionnaires,@RequestParam("email") String email) {
+        userService.userAndQuestionnaireSave(questionnaires,email);
+        log.info("save the all Questionnaire for user");
+        return ResponseEntity.ok("save the all Questionnaire for user");
+    }
     @PostMapping("/generateOtp")
-    public String generateOtp(@RequestParam String email) {
-        String otp = otpService.generateOtp(email);
-        return "OTP has been sent to " + email;
+    public ResponseEntity<String> generateOtp(@RequestParam String email) {
+        try{
+            otpService.generateOtp(email);
+            log.info("OTP has been sent to {}",email);
+            return ResponseEntity.ok("OTP has been sent to " + email);
+        }catch (Exception e){
+            return ResponseEntity.ok("OTP has been not sent to " + email);
+        }
     }
     @PostMapping("/verifyOtp")
-    public String verifyOtp(@RequestParam String email, @RequestParam String otp) {
+    public ResponseEntity<String> verifyOtp(@RequestParam String email, @RequestParam String otp) {
         boolean isValid = otpService.verifyOtp(email, otp);
         if (isValid) {
-            return "OTP is valid";
+            return ResponseEntity.ok("OTP is valid");
         } else {
-            return "Invalid OTP";
+            return ResponseEntity.ok("Invalid OTP");
         }
     }
 }

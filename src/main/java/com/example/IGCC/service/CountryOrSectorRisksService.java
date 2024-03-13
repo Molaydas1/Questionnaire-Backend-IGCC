@@ -7,9 +7,12 @@ import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import com.lowagie.text.DocumentException;
-import com.opencsv.exceptions.CsvException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -28,22 +31,7 @@ public class CountryOrSectorRisksService {
     private CountryOrSectorRisksRepository countryOrSectorRisksRepository;
     @Autowired
     private TemplateEngine templateEngine;
-//    public void saveDataFromCsv(InputStream csvFile) throws IOException, CsvException {
-//        CsvMapper csvMapper = new CsvMapper();
-//        CsvSchema schema = CsvSchema.emptySchema().withHeader();
-//        List<CountryOrSectorRisks> validRows;
-//
-//        try (MappingIterator<CountryOrSectorRisks> iterator = csvMapper.readerFor(CountryOrSectorRisks.class).with(schema).readValues(csvFile)) {
-//            validRows = new ArrayList<>();
-//            while (iterator.hasNextValue()) {
-//                CountryOrSectorRisks csvRow = iterator.nextValue();
-//                if (!csvRow.get_Id().isEmpty()) continue;
-//                validRows.add(csvRow);
-//            }
-//            countryOrSectorRisksRepository.saveAll(validRows);
-//        }
-//    }
-    public void saveDataFromCsv(InputStream csvFile) throws IOException, CsvException {
+    public void saveDataFromCsv(InputStream csvFile) throws IOException{
         CsvMapper csvMapper = new CsvMapper();
         CsvSchema schema = CsvSchema.emptySchema().withHeader();
         List<CountryOrSectorRisks> validRows = new ArrayList<>();
@@ -57,9 +45,7 @@ public class CountryOrSectorRisksService {
             countryOrSectorRisksRepository.saveAll(validRows);
         }
     }
-
-
-    public byte[] generatePdf(String country) throws NoRecordsFoundExcption, DocumentException {
+    public ResponseEntity<byte[]> generatePdfByCountry(String country) throws NoRecordsFoundExcption, DocumentException {
 
         List<CountryOrSectorRisks> countryOrSectorRisks = countryOrSectorRisksRepository.findAllByCountry(country);
         if(countryOrSectorRisks.isEmpty())throw new NoRecordsFoundExcption("no records found");
@@ -74,7 +60,14 @@ public class CountryOrSectorRisksService {
         renderer.layout();
         renderer.createPDF(outputStream);
         renderer.finishPDF();
+        byte[] pdfBytes = outputStream.toByteArray();
 
-        return outputStream.toByteArray();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDispositionFormData("filename", "country_or_sector_risk_table.pdf");
+        headers.setContentLength(pdfBytes.length);
+
+        log.info("Downloading pdf with Country :- {}", country);
+        return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
     }
 }

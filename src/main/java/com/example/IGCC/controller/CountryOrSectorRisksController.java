@@ -1,22 +1,12 @@
 package com.example.IGCC.controller;
 
-import com.example.IGCC.exception.MyFileNotFoundException;
-import com.example.IGCC.exception.NoRecordsFoundExcption;
-import com.example.IGCC.model.CountryOrSectorRisks;
-import com.example.IGCC.repository.CountryOrSectorRisksRepository;
 import com.example.IGCC.service.CountryOrSectorRisksService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
 
 
 @RestController
@@ -26,7 +16,8 @@ public class CountryOrSectorRisksController {
     @Autowired
     private CountryOrSectorRisksService countryOrSectorRisksService;
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadExcelFile(@RequestParam("file") MultipartFile file){
+    public ResponseEntity<String> uploadCsvFile(
+            @RequestParam("file") MultipartFile file){
         try {
             countryOrSectorRisksService.saveDataFromCsv(file.getInputStream());
             log.info("uploading file {}", file.getOriginalFilename());
@@ -37,17 +28,10 @@ public class CountryOrSectorRisksController {
         }
     }
     @GetMapping("/generatePdf")
-    public ResponseEntity<byte[]> generatePdf(@RequestParam("country") String country){
+    public ResponseEntity<byte[]> GeneratePdfByCountry(
+            @RequestParam("country") String country){
         try {
-            byte[] pdfBytes = countryOrSectorRisksService.generatePdf(country);
-
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_PDF);
-            headers.setContentDispositionFormData("filename", "country_or_sector_risk_table.pdf");
-            headers.setContentLength(pdfBytes.length);
-
-            log.info("Downloading pdf with Country {}", country);
-            return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
+            return countryOrSectorRisksService.generatePdfByCountry(country);
         }catch(Exception e){
             log.info("Execption occurs {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
