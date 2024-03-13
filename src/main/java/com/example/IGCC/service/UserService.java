@@ -24,10 +24,10 @@ public class UserService {
     public void createUser(User user){
         User newUser=userRepository.findByEmail(user.getEmail());
         if(newUser!=null){
-            log.info("already user exists{}", newUser);
+            log.info("already user exists{}", newUser.getEmail());
             throw new NoRecordsFoundExcption("already user exists ");
         }else{
-            log.info("create user {}", user);
+            log.info("create user {}", user.getEmail());
             user.setUserAnswerResponse(new ArrayList<>());
             userRepository.save(user);
         }

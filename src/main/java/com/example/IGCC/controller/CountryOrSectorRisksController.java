@@ -4,6 +4,7 @@ import com.example.IGCC.service.CountryOrSectorRisksService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,9 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 public class CountryOrSectorRisksController {
     @Autowired
     private CountryOrSectorRisksService countryOrSectorRisksService;
-    @PostMapping("/upload")
-    public ResponseEntity<String> uploadCsvFile(
-            @RequestParam("file") MultipartFile file){
+//    @PostMapping("/upload")
+    @RequestMapping(path = "/upload", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<String> uploadCsvFile(@RequestPart("file") MultipartFile file){
         try {
             countryOrSectorRisksService.saveDataFromCsv(file.getInputStream());
             log.info("uploading file {}", file.getOriginalFilename());
