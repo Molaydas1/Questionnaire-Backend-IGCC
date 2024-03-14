@@ -5,75 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ea027472-d260-40a0-ac16-bd01dbc66984" name="Changes" comment="create for CountryOrSectorRisks and Questionnaire service">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/config/SecurityConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/controller/AdminController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/filter/JwtAuthFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/model/Admin.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/model/ApiResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/model/AuthRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/model/QuestionnaireComponentResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/model/QuestionnaireResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/model/UserResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/repository/AdminRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/service/AdminService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/service/JwtService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/service/UserInfoDetails.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/config/SwaggerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/config/SwaggerConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/controller/CountryOrSectorRisksController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/controller/CountryOrSectorRisksController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/controller/AdminController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/controller/QuestionnaireController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/controller/QuestionnaireController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/model/CountryOrSectorRisks.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/model/CountryOrSectorRisks.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/model/OtpModel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/model/Questionnaire.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/model/Questionnaire.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/model/QuestionnaireCSVModel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/model/QuestionnaireComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/model/QuestionnaireComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/model/UserAnswerResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/model/UserAnswer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/repository/CountryOrSectorRisksRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/repository/CountryOrSectorRisksRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/repository/OtpRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/repository/QuestionnaireRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/repository/QuestionnaireRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/service/CountryOrSectorRisksService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/service/CountryOrSectorRisksService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/service/OtpService.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/service/QuestionnaireService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/service/QuestionnaireService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/service/QuestionnaireUplodeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/service/QuestionnaireUplodeService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/IGCC/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/IGCC/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/country-or-sector-risk-table.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/country-or-sector-risk-table.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/QuestionnaireBackend-IGCC-0.0.1-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/QuestionnaireBackend-IGCC-0.0.1-SNAPSHOT.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/QuestionnaireBackend-IGCC-0.0.1-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/target/QuestionnaireBackend-IGCC-0.0.1-SNAPSHOT.jar.original" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/IGCC/Application.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/IGCC/Application.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/IGCC/config/SwaggerConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/IGCC/config/SwaggerConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/IGCC/controller/CountryOrSectorRisksController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/IGCC/controller/CountryOrSectorRisksController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/IGCC/controller/AdminController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/IGCC/controller/AdminController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/IGCC/controller/QuestionnaireController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/IGCC/controller/QuestionnaireController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/IGCC/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/IGCC/controller/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/IGCC/model/CountryOrSectorRisks.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/IGCC/model/CountryOrSectorRisks.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/IGCC/model/OtpModel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/IGCC/model/Questionnaire.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/IGCC/model/Questionnaire.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/IGCC/model/QuestionnaireCSVModel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/IGCC/model/QuestionnaireComponent.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/IGCC/model/QuestionnaireComponent.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/IGCC/model/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/IGCC/model/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/IGCC/model/UserAnswerResponse.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/IGCC/repository/CountryOrSectorRisksRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/IGCC/repository/CountryOrSectorRisksRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/IGCC/repository/OtpRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/IGCC/repository/QuestionnaireRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/IGCC/repository/QuestionnaireRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/IGCC/repository/UserRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/IGCC/repository/UserRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/IGCC/service/CountryOrSectorRisksService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/IGCC/service/CountryOrSectorRisksService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/IGCC/service/OtpService.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/IGCC/service/QuestionnaireService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/IGCC/service/QuestionnaireService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/IGCC/service/QuestionnaireUplodeService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/IGCC/service/QuestionnaireUplodeService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/IGCC/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/IGCC/service/UserService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/country-or-sector-risk-table.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/country-or-sector-risk-table.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/2024-03-13T17-17-06_735.dumpstream" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.example.IGCC.ApplicationTests.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.example.IGCC.ApplicationTests.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/surefire-reports/com.example.IGCC.ApplicationTests.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/com.example.IGCC.ApplicationTests.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/com/example/IGCC/ApplicationTests.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -224,11 +162,6 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/example/IGCC/controller/QuestionnaireController.java</url>
-          <line>28</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/example/IGCC/service/QuestionnaireUplodeService.java</url>
           <line>39</line>
           <option name="timeStamp" value="6" />
@@ -242,21 +175,6 @@
           <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-core/6.2.2/spring-security-core-6.2.2.jar!/org/springframework/security/authentication/UsernamePasswordAuthenticationToken.class</url>
           <line>17</line>
           <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/example/IGCC/controller/AdminController.java</url>
-          <line>37</line>
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/example/IGCC/controller/AdminController.java</url>
-          <line>36</line>
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/example/IGCC/service/AdminService.java</url>
-          <line>29</line>
-          <option name="timeStamp" value="15" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

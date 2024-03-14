@@ -58,9 +58,11 @@ public class QuestionnaireService {
 
         return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
     }
-    public List<QuestionnaireResponse> getQuestionnaire(String email){
+    public ResponseEntity<?> getQuestionnaire(String email){
         User user=userRepository.findByEmail(email);
         List<QuestionnaireResponse> questionnaires = questionnaireRepository.findAllQuestionnaire();
+        if (questionnaires.isEmpty())
+            return new ResponseEntity<>(new ApiResponse<>(false,"List of Questionnaire not found ",null), HttpStatus.OK);
         if(!user.getUserAnswerResponse().isEmpty()){
             log.info("already user exists{}", user);
             boolean count;
@@ -78,9 +80,11 @@ public class QuestionnaireService {
                     }
                 }
             }
-            return questionnaires;
+            return new ResponseEntity<>(new ApiResponse<>(true,"List of Questionnaire found ",questionnaires), HttpStatus.OK);
+
         }
         log.info("get all Questionnaire");
-        return questionnaires;
+        return new ResponseEntity<>(new ApiResponse<>(true,"List of Questionnaire found ",questionnaires), HttpStatus.OK);
+
     }
 }

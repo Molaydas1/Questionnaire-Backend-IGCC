@@ -1,5 +1,6 @@
 package com.example.IGCC.controller;
 
+import com.example.IGCC.model.ApiResponse;
 import com.example.IGCC.model.Questionnaire;
 import com.example.IGCC.model.QuestionnaireResponse;
 import com.example.IGCC.service.QuestionnaireService;
@@ -34,8 +35,12 @@ public class QuestionnaireController {
         return questionnaireService.generatePdf();
     }
     @GetMapping("/get")
-    public ResponseEntity<List<QuestionnaireResponse>> getQuestionnaire(@RequestParam("email")String email){
-            return ResponseEntity.status(HttpStatus.OK).body(questionnaireService.getQuestionnaire(email));
+    public ResponseEntity<?> getQuestionnaire(@RequestParam("email")String email)
+    {
+        return questionnaireService.getQuestionnaire(email);
+
+        //return new ResponseEntity<>(new ApiResponse<>(true,"List of Questionnaire found ",questionnaireResponses), HttpStatus.OK);
+            //return ResponseEntity.status(HttpStatus.OK).body(questionnaireService.getQuestionnaire(email));
     }
 
 }

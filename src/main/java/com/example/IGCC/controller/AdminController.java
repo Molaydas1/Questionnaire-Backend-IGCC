@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -45,12 +46,14 @@ public class AdminController {
 //        return ResponseEntity.ok().body("invalid credentials");
 //    }
     @PostMapping("/getAllUser")
+    @PreAuthorize("hasAuthority('Admin')")
     public ResponseEntity<List<UserResponse>> getAllUser() {
         return ResponseEntity.ok().body(userService.showAllUser());
     }
     @PostMapping("/viewUser")
-    public ResponseEntity<List<QuestionnaireResponse>> viewByUser(@RequestParam("email")String email) {
-        return ResponseEntity.ok().body(questionnaireService.getQuestionnaire(email));
+    @PreAuthorize("hasAuthority('Admin')")
+    public ResponseEntity<?> viewByUser(@RequestParam("email")String email) {
+        return questionnaireService.getQuestionnaire(email);
     }
 
 
