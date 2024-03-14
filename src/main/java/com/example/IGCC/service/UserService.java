@@ -1,17 +1,16 @@
 package com.example.IGCC.service;
 
-import com.example.IGCC.exception.NoRecordsFoundExcption;
-import com.example.IGCC.model.Questionnaire;
-import com.example.IGCC.model.QuestionnaireComponent;
-import com.example.IGCC.model.User;
-import com.example.IGCC.model.UserAnswerResponse;
+import com.example.IGCC.model.*;
 import com.example.IGCC.repository.QuestionnaireRepository;
 import com.example.IGCC.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -21,28 +20,70 @@ public class UserService {
     private QuestionnaireRepository questionnaireRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private JavaMailSender emailSender;
     public void createUser(User user){
         User newUser=userRepository.findByEmail(user.getEmail());
         if(newUser!=null){
+            user=newUser;
             log.info("already user exists{}", newUser.getEmail());
-            throw new NoRecordsFoundExcption("already user exists ");
         }else{
             log.info("create user {}", user.getEmail());
             user.setUserAnswerResponse(new ArrayList<>());
-            userRepository.save(user);
         }
+        userRepository.save(user);
     }
-    public void userAndQuestionnaireSave(List<Questionnaire> questionnaires,String email){
+    public void userAndQuestionnaireSaveAndSubmit(List<QuestionnaireResponse> questionnaires, String email,Boolean status){
         User user=userRepository.findByEmail(email);
-        List<UserAnswerResponse> userAnswerResponses=new ArrayList<>();
-        for(Questionnaire questionnaire:questionnaires){
-            for(QuestionnaireComponent component:questionnaire.getComponents()){
-                userAnswerResponses.add(new UserAnswerResponse(questionnaire.getId()+
-                        "."+component.getQuestionId(),
+        List<UserAnswer> userAnswerResponses=new ArrayList<>();
+        for(QuestionnaireResponse questionnaire:questionnaires){
+            for(QuestionnaireComponentResponse component:questionnaire.getComponents()){
+                userAnswerResponses.add(new UserAnswer(component.getQuestionId(),
                         component.getResponse()));
             }
         }
         user.setUserAnswerResponse(userAnswerResponses);
+        user.setStatus(status);
         userRepository.save(user);
+        log.info("save the all Questionnaire for user");
     }
+
+
+    public void generateOtp(String email) {
+        int otpValue = (int) ((Math.random() * (999999 - 100000)) + 100000);
+        String otp = String.valueOf(otpValue);
+
+        User user=userRepository.findByEmail(email);
+
+        user.setOtp(otp);
+        user.setTimestamp(new Date());
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(user.getEmail());
+        message.setSubject("Your OTP for verification");
+        message.setText("Your OTP is: " + otp);
+        emailSender.send(message);
+        userRepository.save(user);
+        log.info("OTP has been sent to {}",email);
+    }
+    public boolean verifyOtp(String email, String otp) {
+        User user = userRepository.findById(email).orElse(null);
+
+        if (user != null && user.getOtp().equals(otp)) {
+            Date currentTime = new Date();
+            Date otpTime = user.getTimestamp();
+            long diffInMillis = currentTime.getTime() - otpTime.getTime();
+            long diffInSeconds = diffInMillis / 1000;
+
+            if (diffInSeconds <= 120) {
+                log.info("valid otp");
+                return true;
+            }
+        }
+        log.info("invalid otp");
+        return false;
+    }
+    public List<UserResponse> showAllUser() {
+        return userRepository.findAllUser();
+    }
+
 }

@@ -1,11 +1,9 @@
 package com.example.IGCC.controller;
 
-import com.example.IGCC.exception.NoRecordsFoundExcption;
-import com.example.IGCC.model.Questionnaire;
+import com.example.IGCC.model.ApiResponse;
+import com.example.IGCC.model.QuestionnaireResponse;
 import com.example.IGCC.model.User;
-import com.example.IGCC.repository.QuestionnaireRepository;
 import com.example.IGCC.repository.UserRepository;
-import com.example.IGCC.service.OtpService;
 import com.example.IGCC.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,47 +16,40 @@ import java.util.List;
 @RestController
 @RequestMapping("/User")
 @Slf4j
+@CrossOrigin(origins = "*")
 public class UserController {
     @Autowired
     private UserService userService;
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private OtpService otpService;
 
     @PostMapping("/create")
-    public ResponseEntity<String> createUser(@RequestBody User user) {
-        try {
-            userService.createUser(user);
-            return ResponseEntity.ok().body("create user");
-        }catch (NoRecordsFoundExcption e){
-            return ResponseEntity.ok().body("already user exists ");
-        }
+    public ResponseEntity<?> createUser(@RequestBody User user) {
+        userService.createUser(user);
+        return new ResponseEntity<>(new ApiResponse<>(true,"user create successfully",null), HttpStatus.OK);
     }
     @PostMapping("/save")
     public ResponseEntity<String> allQuestionnaireSaveUser(
-            @RequestBody List<Questionnaire> questionnaires,@RequestParam("email") String email) {
-        userService.userAndQuestionnaireSave(questionnaires,email);
-        log.info("save the all Questionnaire for user");
+            @RequestBody List<QuestionnaireResponse> questionnaires, @RequestParam("email") String email) {
+        userService.userAndQuestionnaireSaveAndSubmit(questionnaires,email,false);
+        return ResponseEntity.ok("save the all Questionnaire for user");
+    }
+    @PostMapping("/submit")
+    public ResponseEntity<String> allQuestionnaireSubmitUser(
+            @RequestBody List<QuestionnaireResponse> questionnaires, @RequestParam("email") String email) {
+        userService.userAndQuestionnaireSaveAndSubmit(questionnaires,email,true);
         return ResponseEntity.ok("save the all Questionnaire for user");
     }
     @PostMapping("/generateOtp")
     public ResponseEntity<String> generateOtp(@RequestParam String email) {
-        try{
-            otpService.generateOtp(email);
-            log.info("OTP has been sent to {}",email);
+            userService.generateOtp(email);
             return ResponseEntity.ok("OTP has been sent to " + email);
-        }catch (Exception e){
-            return ResponseEntity.ok("OTP has been not sent to " + email);
-        }
     }
     @PostMapping("/verifyOtp")
     public ResponseEntity<String> verifyOtp(@RequestParam String email, @RequestParam String otp) {
-        boolean isValid = otpService.verifyOtp(email, otp);
-        if (isValid) {
+        if (userService.verifyOtp(email, otp)) {
             return ResponseEntity.ok("OTP is valid");
-        } else {
-            return ResponseEntity.ok("Invalid OTP");
         }
+        return ResponseEntity.ok("Invalid OTP");
     }
 }

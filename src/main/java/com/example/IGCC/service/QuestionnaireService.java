@@ -1,11 +1,9 @@
 package com.example.IGCC.service;
 
-import com.example.IGCC.model.QuestionnaireComponent;
-import com.example.IGCC.model.Questionnaire;
-import com.example.IGCC.model.User;
-import com.example.IGCC.model.UserAnswerResponse;
+import com.example.IGCC.model.*;
 import com.example.IGCC.repository.QuestionnaireRepository;
 import com.example.IGCC.repository.UserRepository;
+import com.lowagie.text.DocumentException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -29,7 +27,7 @@ public class QuestionnaireService {
     private TemplateEngine templateEngine;
     @Autowired
     private UserRepository userRepository;
-    public ResponseEntity<byte[]> generatePdf() throws Exception {
+    public ResponseEntity<byte[]> generatePdf() throws DocumentException {
         List<Questionnaire> noAttributes = questionnaireRepository.findAll();
         List<List<String>> questions = new ArrayList<>();
         for (Questionnaire item : noAttributes) {
@@ -60,19 +58,17 @@ public class QuestionnaireService {
 
         return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
     }
-    public List<Questionnaire> getQuestionnaire(String email){
+    public List<QuestionnaireResponse> getQuestionnaire(String email){
         User user=userRepository.findByEmail(email);
-        List<Questionnaire> questionnaires = questionnaireRepository.findAllQuestionnaire();
+        List<QuestionnaireResponse> questionnaires = questionnaireRepository.findAllQuestionnaire();
         if(!user.getUserAnswerResponse().isEmpty()){
             log.info("already user exists{}", user);
             boolean count;
-            for(Questionnaire questionnaire:questionnaires){
-                for(QuestionnaireComponent component:questionnaire.getComponents()){
+            for(QuestionnaireResponse questionnaire:questionnaires){
+                for(QuestionnaireComponentResponse component:questionnaire.getComponents()){
                     count=false;
-                    for (UserAnswerResponse userAnswerResponse:user.getUserAnswerResponse()){
-                        if(userAnswerResponse.getQuestionId().equals(questionnaire.getId()+"."+
-                                component.getQuestionId())){
-
+                    for (UserAnswer userAnswerResponse:user.getUserAnswerResponse()){
+                        if(userAnswerResponse.getQuestionId().equals(component.getQuestionId())){
                             component.setResponse(userAnswerResponse.getResponse());
                             count=true;
                             break;
@@ -84,6 +80,7 @@ public class QuestionnaireService {
             }
             return questionnaires;
         }
+        log.info("get all Questionnaire");
         return questionnaires;
     }
 }

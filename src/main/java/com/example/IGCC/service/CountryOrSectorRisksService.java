@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import org.xhtmlrenderer.pdf.ITextRenderer;
@@ -31,24 +32,26 @@ public class CountryOrSectorRisksService {
     private CountryOrSectorRisksRepository countryOrSectorRisksRepository;
     @Autowired
     private TemplateEngine templateEngine;
-    public void saveDataFromCsv(InputStream csvFile) throws IOException{
+    public void saveDataFromCsv(MultipartFile file) throws IOException{
         CsvMapper csvMapper = new CsvMapper();
         CsvSchema schema = CsvSchema.emptySchema().withHeader();
         List<CountryOrSectorRisks> validRows = new ArrayList<>();
 
-        try (MappingIterator<CountryOrSectorRisks> iterator = csvMapper.readerFor(CountryOrSectorRisks.class).with(schema).readValues(csvFile)) {
+        try (MappingIterator<CountryOrSectorRisks> iterator = csvMapper.readerFor(CountryOrSectorRisks.class).with(schema).readValues(file.getInputStream())) {
             while (iterator.hasNext()) {
                 CountryOrSectorRisks csvRow = iterator.next();
-                if (!csvRow.getId().isEmpty())
+                if (!csvRow.getNo().isEmpty())
                     validRows.add(csvRow);
             }
+            countryOrSectorRisksRepository.deleteAll();
             countryOrSectorRisksRepository.saveAll(validRows);
+            log.info("uploading file {}", file.getOriginalFilename());
         }
     }
     public ResponseEntity<byte[]> generatePdfByCountry(String country) throws NoRecordsFoundExcption, DocumentException {
 
         List<CountryOrSectorRisks> countryOrSectorRisks = countryOrSectorRisksRepository.findAllByCountry(country);
-        if(countryOrSectorRisks.isEmpty())throw new NoRecordsFoundExcption("no records found");
+        if(countryOrSectorRisks.isEmpty())return new ResponseEntity<>(null);
 
         Context context = new Context();
         context.setVariable("output", countryOrSectorRisks);

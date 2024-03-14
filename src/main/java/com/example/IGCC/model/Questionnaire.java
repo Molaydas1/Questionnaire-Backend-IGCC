@@ -16,8 +16,6 @@ import java.util.List;
 @ToString
 @Document("Questionnaire")
 public class Questionnaire {
-    @Id
-    private String id;
     private String section;
     private List<QuestionnaireComponent> components;
 }

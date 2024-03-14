@@ -8,6 +8,5 @@ import java.util.List;
 
 
 public interface CountryOrSectorRisksRepository extends MongoRepository<CountryOrSectorRisks, String> {
-    @Query("{country:'?0'}")
     List<CountryOrSectorRisks> findAllByCountry(String country);
 }

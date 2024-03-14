@@ -17,8 +17,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document("CountryOrSectorRisks")
 public class CountryOrSectorRisks {
     @Id
-    @JsonProperty("No")
     private String id;
+    @JsonProperty("No")
+    private String no;
     @JsonProperty("CountryOrSectorRisks")
     private String country;
     @JsonProperty("TypeOfRisks")
