@@ -1,8 +1,6 @@
 package com.example.IGCC.controller;
 
 import com.example.IGCC.model.ApiResponse;
-import com.example.IGCC.model.Questionnaire;
-import com.example.IGCC.model.QuestionnaireResponse;
 import com.example.IGCC.service.QuestionnaireService;
 import com.example.IGCC.service.QuestionnaireUplodeService;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
 
 @RestController
 @Slf4j
@@ -26,21 +23,17 @@ public class QuestionnaireController {
     @Autowired
     private QuestionnaireUplodeService questionnaireUplodeService;
     @RequestMapping(path = "/upload", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> uploadCsvFile(@RequestParam("file") MultipartFile file) throws IOException {
-            questionnaireUplodeService.saveDataFromCsv(file);
-            return ResponseEntity.ok("Excel data imported successfully.");
+    public ResponseEntity<?> uploadCsvFile(@RequestParam("file") MultipartFile file) throws IOException {
+        questionnaireUplodeService.saveDataFromCsv(file);
+        return new ResponseEntity<>(new ApiResponse<>(true,"uploading file successfully",null), HttpStatus.OK);
     }
     @GetMapping("/generatePdf")
     public ResponseEntity<byte[]> generatePdf() throws Exception {
         return questionnaireService.generatePdf();
     }
     @GetMapping("/get")
-    public ResponseEntity<?> getQuestionnaire(@RequestParam("email")String email)
-    {
+    public ResponseEntity<?> getQuestionnaire(@RequestParam("email")String email) {
         return questionnaireService.getQuestionnaire(email);
-
-        //return new ResponseEntity<>(new ApiResponse<>(true,"List of Questionnaire found ",questionnaireResponses), HttpStatus.OK);
-            //return ResponseEntity.status(HttpStatus.OK).body(questionnaireService.getQuestionnaire(email));
     }
 
 }

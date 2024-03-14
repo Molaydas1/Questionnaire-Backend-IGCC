@@ -21,13 +21,11 @@ public class CountryOrSectorRisksController {
     @Autowired
     private CountryOrSectorRisksService countryOrSectorRisksService;
     @RequestMapping(path = "/upload", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> uploadCsvFile(@RequestPart("file") MultipartFile file) throws IOException {
-            countryOrSectorRisksService.saveDataFromCsv(file);
-            return ResponseEntity.ok("Excel data imported successfully.");
+    public ResponseEntity<?> uploadCsvFile(@RequestPart("file") MultipartFile file) throws IOException {
+            return countryOrSectorRisksService.saveDataFromCsv(file);
     }
-
     @RequestMapping(value = "/generatePdf", method = RequestMethod.GET, produces = MediaType.APPLICATION_PDF_VALUE)
-    public ResponseEntity<byte[]> GeneratePdfByCountry(@RequestParam("country") String country) throws DocumentException {
+    public ResponseEntity<?> generatePdfByCountry(@RequestParam("country") String country) throws DocumentException {
         return countryOrSectorRisksService.generatePdfByCountry(country);
     }
 }

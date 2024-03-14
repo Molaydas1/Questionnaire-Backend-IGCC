@@ -1,7 +1,8 @@
 package com.example.IGCC.service;
 
+import com.example.IGCC.entity.CountryOrSectorRisks;
 import com.example.IGCC.exception.NoRecordsFoundExcption;
-import com.example.IGCC.model.CountryOrSectorRisks;
+import com.example.IGCC.model.ApiResponse;
 import com.example.IGCC.repository.CountryOrSectorRisksRepository;
 import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
@@ -21,7 +22,6 @@ import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class CountryOrSectorRisksService {
     private CountryOrSectorRisksRepository countryOrSectorRisksRepository;
     @Autowired
     private TemplateEngine templateEngine;
-    public void saveDataFromCsv(MultipartFile file) throws IOException{
+    public ResponseEntity<?> saveDataFromCsv(MultipartFile file) throws IOException{
         CsvMapper csvMapper = new CsvMapper();
         CsvSchema schema = CsvSchema.emptySchema().withHeader();
         List<CountryOrSectorRisks> validRows = new ArrayList<>();
@@ -46,9 +46,10 @@ public class CountryOrSectorRisksService {
             countryOrSectorRisksRepository.deleteAll();
             countryOrSectorRisksRepository.saveAll(validRows);
             log.info("uploading file {}", file.getOriginalFilename());
+            return new ResponseEntity<>(new ApiResponse<>(true,"uploading file successfully",null), HttpStatus.OK);
         }
     }
-    public ResponseEntity<byte[]> generatePdfByCountry(String country) throws NoRecordsFoundExcption, DocumentException {
+    public ResponseEntity<?> generatePdfByCountry(String country) throws NoRecordsFoundExcption, DocumentException {
 
         List<CountryOrSectorRisks> countryOrSectorRisks = countryOrSectorRisksRepository.findAllByCountry(country);
         if(countryOrSectorRisks.isEmpty())return new ResponseEntity<>(null);

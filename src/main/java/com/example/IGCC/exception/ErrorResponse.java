@@ -3,6 +3,7 @@ package com.example.IGCC.exception;
 import org.springframework.http.HttpStatus;
 public class ErrorResponse {
     private String message;
+    private HttpStatus status;
 
     public String getMessage() {
         return message;
@@ -20,7 +21,6 @@ public class ErrorResponse {
         this.status = status;
     }
 
-    private HttpStatus status;
 
     public ErrorResponse(String message, HttpStatus status) {
         this.message = message;

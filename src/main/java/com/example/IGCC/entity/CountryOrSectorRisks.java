@@ -1,4 +1,4 @@
-package com.example.IGCC.model;
+package com.example.IGCC.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,8 +11,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
-@ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Document("CountryOrSectorRisks")
 public class CountryOrSectorRisks {

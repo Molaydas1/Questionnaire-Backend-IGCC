@@ -1,6 +1,6 @@
 package com.example.IGCC.repository;
 
-import com.example.IGCC.model.User;
+import com.example.IGCC.entity.User;
 import com.example.IGCC.model.UserResponse;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;

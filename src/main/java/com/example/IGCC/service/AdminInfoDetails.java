@@ -1,6 +1,6 @@
 package com.example.IGCC.service;
 
-import com.example.IGCC.model.Admin;
+import com.example.IGCC.entity.Admin;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,13 +10,13 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class UserInfoDetails implements UserDetails {
+public class AdminInfoDetails implements UserDetails {
 
     private String username;
     private String password;
     private List<GrantedAuthority> authorities;
 
-    public UserInfoDetails(Admin employee) {
+    public AdminInfoDetails(Admin employee) {
         username = employee.getEmail();
         password = employee.getPassword();
         authorities = Arrays.stream(employee.getRoles().split(","))

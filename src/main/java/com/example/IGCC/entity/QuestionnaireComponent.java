@@ -1,4 +1,4 @@
-package com.example.IGCC.model;
+package com.example.IGCC.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,6 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 public class QuestionnaireComponent {
     @JsonProperty("No")
     private String questionId;

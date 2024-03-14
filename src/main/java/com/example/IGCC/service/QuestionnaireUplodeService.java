@@ -1,8 +1,8 @@
 package com.example.IGCC.service;
 
 
-import com.example.IGCC.model.Questionnaire;
-import com.example.IGCC.model.QuestionnaireComponent;
+import com.example.IGCC.entity.Questionnaire;
+import com.example.IGCC.entity.QuestionnaireComponent;
 import com.example.IGCC.repository.QuestionnaireRepository;
 import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;

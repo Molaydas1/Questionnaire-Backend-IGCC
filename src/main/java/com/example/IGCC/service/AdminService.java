@@ -1,11 +1,14 @@
 package com.example.IGCC.service;
 
 import com.example.IGCC.config.SecurityConfig;
+import com.example.IGCC.entity.Admin;
 import com.example.IGCC.model.*;
 import com.example.IGCC.repository.AdminRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,7 +28,7 @@ public class AdminService implements UserDetailsService {
     private String password;
     @Autowired
     private SecurityConfig securityConfig;
-    public void createAdmin(){
+    public ResponseEntity<?> createAdmin(){
         Admin admin;
 //        if(admin!=null){
 //            log.info("already Admin exists{}", admin.getEmail());
@@ -37,23 +40,23 @@ public class AdminService implements UserDetailsService {
             log.info("create user {}", admin.getEmail());
 //        }
         adminRepository.save(admin);
+        return new ResponseEntity<>(new ApiResponse<>(true,"Create Admin ",null), HttpStatus.OK);
     }
-//    public Boolean adminLoginValidation(Admin admin){
-//        Admin newAdmin=adminRepository.findByEmail(admin.getEmail());
-//        if(newAdmin != null && newAdmin.getPassword().equals(admin.getPassword())){
-//            log.info("admin Login successfully");
-//            return true;
-//        }
-//        log.info("invalid credentials");
-//        return false;
-//    }
+    public ResponseEntity<?> adminLoginValidation(Admin admin){
+        Admin newAdmin=adminRepository.findByEmail(admin.getEmail()).get();
+        if(newAdmin != null && newAdmin.getPassword().equals(admin.getPassword())){
+            log.info("Admin Login Successfully");
+            return new ResponseEntity<>(new ApiResponse<>(true,"Admin Login Successfully",null), HttpStatus.OK);
+        }
+        log.info("Invalid Credentials");
+        return new ResponseEntity<>(new ApiResponse<>(false,"Invalid Credentials",null), HttpStatus.INTERNAL_SERVER_ERROR);
+
+    }
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
     {
-
         Optional<Admin> userDetail = adminRepository.findByEmail(username);
-
-        return userDetail.map(UserInfoDetails::new)
+        return userDetail.map(AdminInfoDetails::new)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found " + username));
     }
 }

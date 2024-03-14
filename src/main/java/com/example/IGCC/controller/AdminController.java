@@ -1,5 +1,6 @@
 package com.example.IGCC.controller;
 
+import com.example.IGCC.entity.Admin;
 import com.example.IGCC.model.*;
 import com.example.IGCC.service.AdminService;
 import com.example.IGCC.service.JwtService;
@@ -34,38 +35,29 @@ public class AdminController {
     @Autowired
     private QuestionnaireService questionnaireService;
     @PostMapping("/create")
-    public ResponseEntity<String> createAdmin() {
-        adminService.createAdmin();
-        return ResponseEntity.ok().body("create Admin");
+    public ResponseEntity<?> createAdmin() {
+        return adminService.createAdmin();
     }
-//    @PostMapping("/login")
-//    public ResponseEntity<String> createUser(@RequestBody Admin admin) {
-//        if (adminService.adminLoginValidation(admin)){
-//            return ResponseEntity.ok("login successfully");
-//        }
-//        return ResponseEntity.ok().body("invalid credentials");
-//    }
+    @PostMapping("/login")
+    public ResponseEntity<?> loginAdmin(@RequestBody Admin admin) {
+        return adminService.adminLoginValidation(admin);
+    }
     @PostMapping("/getAllUser")
     @PreAuthorize("hasAuthority('Admin')")
-    public ResponseEntity<List<UserResponse>> getAllUser() {
-        return ResponseEntity.ok().body(userService.showAllUser());
+    public ResponseEntity<?> getAllUser() {
+        return userService.showAllUser();
     }
     @PostMapping("/viewUser")
     @PreAuthorize("hasAuthority('Admin')")
     public ResponseEntity<?> viewByUser(@RequestParam("email")String email) {
         return questionnaireService.getQuestionnaire(email);
     }
-
-
     @PostMapping("/generateToken")
-//    public String authenticateAndGetToken(@RequestBody AuthRequest authRequest) {
     public ResponseEntity<?> authenticateAndGetToken(@RequestBody AuthRequest authRequest) {
         Authentication authentication = authenticationManager.
                 authenticate(new UsernamePasswordAuthenticationToken
                         (authRequest.getUsername(), authRequest.getPassword()));
-        if (authentication.isAuthenticated())
-        {
-            // return jwtService.generateToken(authRequest.getUsername());
+        if (authentication.isAuthenticated()){
             return new ResponseEntity<>(new ApiResponse<>(true,"Login Successful",jwtService.generateToken(authRequest.getUsername())), HttpStatus.OK);
         } else {
             throw new UsernameNotFoundException("Invalid user request!");

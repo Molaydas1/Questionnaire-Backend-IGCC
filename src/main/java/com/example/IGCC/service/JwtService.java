@@ -1,6 +1,6 @@
 package com.example.IGCC.service;
 
-import com.example.IGCC.model.Admin;
+import com.example.IGCC.entity.Admin;
 import com.example.IGCC.repository.AdminRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -17,13 +17,13 @@ import java.util.function.Function;
 public class JwtService
 {
     @Autowired
-    private AdminRepository employeeRepository;
+    private AdminRepository adminRepository;
 
     public static final String SECRET = "5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437";
 
     public String generateToken(String userName){
         Map<String, Object> claims = new HashMap<>();
-        Admin employee=employeeRepository.findByEmail(userName).get();
+        Admin employee=adminRepository.findByEmail(userName).get();
         claims.put("roles", employee.getRoles());
 //        claims.put("name",employee.getName());
 //        claims.put("employee_id",employee.getEmployee_id());
@@ -52,10 +52,8 @@ public class JwtService
         return extractClaim(token, Claims::getSubject);
     }
 
-    public Date extractExpiration(String token)
-    {
+    public Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
-
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {

@@ -1,4 +1,4 @@
-package com.example.IGCC.model;
+package com.example.IGCC.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,7 +8,6 @@ import lombok.ToString;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 public class UserAnswer {
     private String questionId;
     private Boolean response;

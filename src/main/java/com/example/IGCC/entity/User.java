@@ -1,4 +1,4 @@
-package com.example.IGCC.model;
+package com.example.IGCC.entity;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -15,18 +15,13 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Document("User")
 public class User{
 
     @Id
     private String id;
-    @NotBlank
-    @Email
     private String email;
-    @NotBlank
     private String country;
-    @NotBlank
     private String sector;
     private Boolean status;
     private String otp;

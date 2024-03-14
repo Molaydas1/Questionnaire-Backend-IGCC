@@ -1,5 +1,9 @@
 package com.example.IGCC.service;
 
+import com.example.IGCC.entity.Questionnaire;
+import com.example.IGCC.entity.QuestionnaireComponent;
+import com.example.IGCC.entity.User;
+import com.example.IGCC.entity.UserAnswer;
 import com.example.IGCC.model.*;
 import com.example.IGCC.repository.QuestionnaireRepository;
 import com.example.IGCC.repository.UserRepository;

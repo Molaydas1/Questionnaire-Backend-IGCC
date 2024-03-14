@@ -1,10 +1,14 @@
 package com.example.IGCC.service;
 
+import com.example.IGCC.entity.User;
+import com.example.IGCC.entity.UserAnswer;
 import com.example.IGCC.model.*;
 import com.example.IGCC.repository.QuestionnaireRepository;
 import com.example.IGCC.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -54,7 +58,6 @@ public class UserService {
         String otp = String.valueOf(otpValue);
 
         User user=userRepository.findByEmail(email);
-
         user.setOtp(otp);
         user.setTimestamp(new Date());
         SimpleMailMessage message = new SimpleMailMessage();
@@ -65,9 +68,8 @@ public class UserService {
         userRepository.save(user);
         log.info("OTP has been sent to {}",email);
     }
-    public boolean verifyOtp(String email, String otp) {
-        User user = userRepository.findById(email).orElse(null);
-
+    public ResponseEntity<?> verifyOtp(String email, String otp) {
+        User user = userRepository.findByEmail(email);
         if (user != null && user.getOtp().equals(otp)) {
             Date currentTime = new Date();
             Date otpTime = user.getTimestamp();
@@ -76,14 +78,13 @@ public class UserService {
 
             if (diffInSeconds <= 120) {
                 log.info("valid otp");
-                return true;
+                return new ResponseEntity<>(new ApiResponse<>(true,"OTP is valid",null), HttpStatus.OK);
             }
         }
         log.info("invalid otp");
-        return false;
+        return new ResponseEntity<>(new ApiResponse<>(false,"Invalid OTP",null), HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    public List<UserResponse> showAllUser() {
-        return userRepository.findAllUser();
+    public ResponseEntity<?> showAllUser() {
+        return new ResponseEntity<>(new ApiResponse<>(true,"List of User found ",userRepository.findAllUser()), HttpStatus.OK);
     }
-
 }

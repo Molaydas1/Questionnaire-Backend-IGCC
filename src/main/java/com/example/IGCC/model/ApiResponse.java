@@ -1,17 +1,11 @@
 package com.example.IGCC.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @AllArgsConstructor
 public class ApiResponse<T>
 {
-
     private boolean success;
     private String message;
     private T payload;

@@ -1,8 +1,7 @@
 package com.example.IGCC.repository;
 
-import com.example.IGCC.model.CountryOrSectorRisks;
+import com.example.IGCC.entity.CountryOrSectorRisks;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
 
 import java.util.List;
 

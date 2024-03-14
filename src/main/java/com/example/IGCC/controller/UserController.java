@@ -1,8 +1,8 @@
 package com.example.IGCC.controller;
 
+import com.example.IGCC.entity.User;
 import com.example.IGCC.model.ApiResponse;
 import com.example.IGCC.model.QuestionnaireResponse;
-import com.example.IGCC.model.User;
 import com.example.IGCC.repository.UserRepository;
 import com.example.IGCC.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -29,27 +29,25 @@ public class UserController {
         return new ResponseEntity<>(new ApiResponse<>(true,"user create successfully",null), HttpStatus.OK);
     }
     @PostMapping("/save")
-    public ResponseEntity<String> allQuestionnaireSaveUser(
+    public ResponseEntity<?> allQuestionnaireSaveUser(
             @RequestBody List<QuestionnaireResponse> questionnaires, @RequestParam("email") String email) {
         userService.userAndQuestionnaireSaveAndSubmit(questionnaires,email,false);
-        return ResponseEntity.ok("save the all Questionnaire for user");
+        return new ResponseEntity<>(new ApiResponse<>(true,"save the all response successfully",null), HttpStatus.OK);
     }
     @PostMapping("/submit")
-    public ResponseEntity<String> allQuestionnaireSubmitUser(
+    public ResponseEntity<?> allQuestionnaireSubmitUser(
             @RequestBody List<QuestionnaireResponse> questionnaires, @RequestParam("email") String email) {
         userService.userAndQuestionnaireSaveAndSubmit(questionnaires,email,true);
-        return ResponseEntity.ok("save the all Questionnaire for user");
+        return new ResponseEntity<>(new ApiResponse<>(true,"submit the all response successfully",null), HttpStatus.OK);
+
     }
     @PostMapping("/generateOtp")
-    public ResponseEntity<String> generateOtp(@RequestParam String email) {
-            userService.generateOtp(email);
-            return ResponseEntity.ok("OTP has been sent to " + email);
+    public ResponseEntity<?> generateOtp(@RequestParam String email) {
+        userService.generateOtp(email);
+        return new ResponseEntity<>(new ApiResponse<>(true,"OTP sent successfully",null), HttpStatus.OK);
     }
     @PostMapping("/verifyOtp")
-    public ResponseEntity<String> verifyOtp(@RequestParam String email, @RequestParam String otp) {
-        if (userService.verifyOtp(email, otp)) {
-            return ResponseEntity.ok("OTP is valid");
-        }
-        return ResponseEntity.ok("Invalid OTP");
+    public ResponseEntity<?> verifyOtp(@RequestParam String email, @RequestParam String otp) {
+        return userService.verifyOtp(email, otp);
     }
 }

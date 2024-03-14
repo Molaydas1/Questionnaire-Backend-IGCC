@@ -1,13 +1,10 @@
-package com.example.IGCC.model;
+package com.example.IGCC.entity;
 
-import lombok.*;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Document("Admin")
 public class Admin {
     @Id
