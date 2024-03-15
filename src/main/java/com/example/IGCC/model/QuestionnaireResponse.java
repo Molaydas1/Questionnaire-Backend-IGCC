@@ -12,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class QuestionnaireResponse {
+    private String sectionId;
     private String section;
     private List<QuestionnaireComponentResponse> components;
 }

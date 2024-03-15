@@ -2,7 +2,6 @@ package com.example.IGCC.controller;
 
 import com.example.IGCC.service.CountryOrSectorRisksService;
 import com.lowagie.text.DocumentException;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,7 +13,6 @@ import java.io.IOException;
 
 
 @RestController
-@Slf4j
 @CrossOrigin(origins = "*")
 @RequestMapping("/CountryOrSectorRisks")
 public class CountryOrSectorRisksController {

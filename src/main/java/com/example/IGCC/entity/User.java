@@ -1,11 +1,6 @@
 package com.example.IGCC.entity;
-
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -24,7 +19,9 @@ public class User{
     private String country;
     private String sector;
     private Boolean status;
+    private Date submitDate;
+    private Boolean flag;
     private String otp;
-    private Date timestamp;
-    private List<UserAnswer> userAnswerResponse;
+    private Date otpSandTime;
+    private List<UserAnswer> userAnswer;
 }

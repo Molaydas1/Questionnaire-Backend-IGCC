@@ -6,7 +6,6 @@ import com.example.IGCC.service.AdminService;
 import com.example.IGCC.service.JwtService;
 import com.example.IGCC.service.QuestionnaireService;
 import com.example.IGCC.service.UserService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +20,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/Admin")
-@Slf4j
 @CrossOrigin(origins = "*")
 public class AdminController {
     @Autowired
@@ -42,16 +40,16 @@ public class AdminController {
     public ResponseEntity<?> loginAdmin(@RequestBody Admin admin) {
         return adminService.adminLoginValidation(admin);
     }
-    @PostMapping("/getAllUser")
-    @PreAuthorize("hasAuthority('Admin')")
-    public ResponseEntity<?> getAllUser() {
-        return userService.showAllUser();
-    }
-    @PostMapping("/viewUser")
-    @PreAuthorize("hasAuthority('Admin')")
-    public ResponseEntity<?> viewByUser(@RequestParam("email")String email) {
-        return questionnaireService.getQuestionnaire(email);
-    }
+//    @PostMapping("/getAllUser")
+//    @PreAuthorize("hasAuthority('Admin')")
+//    public ResponseEntity<?> getAllUser() {
+//        return userService.showAllUser();
+//    }
+//    @PostMapping("/viewUser")
+//    @PreAuthorize("hasAuthority('Admin')")
+//    public ResponseEntity<?> viewByUser(@RequestParam("email")String email) {
+//        return questionnaireService.getQuestionnaire(email);
+//    }
     @PostMapping("/generateToken")
     public ResponseEntity<?> authenticateAndGetToken(@RequestBody AuthRequest authRequest) {
         Authentication authentication = authenticationManager.

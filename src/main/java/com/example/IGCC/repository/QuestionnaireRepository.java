@@ -8,6 +8,13 @@ import org.springframework.data.mongodb.repository.Query;
 import java.util.List;
 
 public interface QuestionnaireRepository extends MongoRepository<Questionnaire, String> {
+    @Query(value = "{flag:true}")
+    List<QuestionnaireResponse> findAllFlagTrueQuestionnaire();
     @Query(value = "{}")
     List<QuestionnaireResponse> findAllQuestionnaire();
+
+
+//    @Query("{$setField: {flag:false},}")
+//    void updateAll();
+
 }

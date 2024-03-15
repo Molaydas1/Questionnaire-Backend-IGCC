@@ -37,7 +37,7 @@ public class AdminService implements UserDetailsService {
             admin.setEmail(email);
             admin.setPassword( securityConfig.passwordEncoder().encode(password));
             admin.setRoles("Admin");
-            log.info("create user {}", admin.getEmail());
+            log.info("create Admin Successfully {}", admin.getEmail());
 //        }
         adminRepository.save(admin);
         return new ResponseEntity<>(new ApiResponse<>(true,"Create Admin ",null), HttpStatus.OK);
@@ -53,8 +53,7 @@ public class AdminService implements UserDetailsService {
 
     }
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
-    {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Admin> userDetail = adminRepository.findByEmail(username);
         return userDetail.map(AdminInfoDetails::new)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found " + username));
